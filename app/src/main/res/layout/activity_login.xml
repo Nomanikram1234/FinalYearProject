@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:typeface="serif"
+    tools:context="com.example.nomanikram.epilepsyseizuredetection.LoginActivity">
+
+
+   <!-- Toolbar Section-->
+   <android.support.v7.widget.Toolbar
+       android:layout_width="match_parent"
+       android:layout_height="150dp"
+
+       android:background="@color/colorPrimary"
+       android:id="@+id/toolbar">
+
+   </android.support.v7.widget.Toolbar>
+
+
+   <!-- Login Option -->
+
+   <!-- UserName-->
+   <android.support.design.widget.TextInputLayout
+       android:layout_height="wrap_content"
+       android:layout_width="match_parent"
+       android:id="@+id/username_textInputLayout"
+       android:layout_marginTop="175dp"
+       android:layout_marginLeft="32dp"
+       android:layout_marginRight="32dp"
+       android:layout_marginBottom="8dp"
+
+       >
+
+      <android.support.v7.widget.AppCompatEditText
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:hint="Email:"
+          android:id="@+id/txt_username"
+          android:inputType="text"
+
+        />
+
+
+   </android.support.design.widget.TextInputLayout>
+
+
+   <!--Password-->
+   <android.support.design.widget.TextInputLayout
+       android:layout_height="wrap_content"
+       android:layout_width="match_parent"
+       android:id="@+id/password_textInputLayout"
+       android:layout_below="@id/username_textInputLayout"
+
+       android:layout_marginLeft="32dp"
+       android:layout_marginRight="32dp"
+       android:layout_marginBottom="8dp"
+       app:passwordToggleEnabled="true"
+       app:counterOverflowTextAppearance="@color/colorError"
+
+       >
+
+      <android.support.v7.widget.AppCompatEditText
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:hint="Password:"
+          android:id="@+id/txt_password"
+          android:inputType="textPassword"
+
+          />
+   </android.support.design.widget.TextInputLayout>
+
+   <!--login button-->
+
+   <android.support.v7.widget.AppCompatButton
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginLeft="32dp"
+       android:layout_marginRight="32dp"
+       android:text="Login"
+       android:layout_below="@id/password_textInputLayout"
+       android:layout_centerHorizontal="true"
+       android:id="@+id/btn_login"
+       style="@style/RaisedButton"
+       />
+
+   <android.support.v7.widget.AppCompatTextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="14dp"
+       android:layout_marginLeft="36dp"
+       android:textSize="12dp"
+android:id="@+id/txt_forgottenDetails"
+       android:gravity="center_horizontal"
+       android:layout_below="@id/btn_login"
+       android:text="Forgotten your login details?"/>
+
+
+   <android.support.v7.widget.AppCompatButton
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/btn_login"
+       android:layout_toRightOf="@id/txt_forgottenDetails"
+       android:text="Get help with signing in."
+       android:textSize="12dp"
+       android:textAllCaps="false"
+       style="@style/FlatButton"
+   />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_dontHaveAccount"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="14dp"
+        android:text="Don't have an account?" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up"
+        android:textSize="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/txt_dontHaveAccount"
+        android:layout_margin="0dp"
+        android:id="@+id/btn_signup"
+        style="@style/FlatButton"/>
+
+   <android.support.v7.widget.AppCompatTextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+
+       android:layout_alignParentStart="true"
+       android:layout_alignParentTop="true"
+       android:layout_marginTop="59dp"
+       android:gravity="center"
+       android:padding="0dp"
+       android:text="Epilepsy Seizure Detection"
+       android:textColor="#FFFFFF"
+       android:textSize="24dp"
+       android:typeface="serif"
+
+       />
+
+</RelativeLayout>

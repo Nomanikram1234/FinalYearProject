@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "19964727870",
+    "firebase_url": "https://fyp-esd.firebaseio.com",
+    "project_id": "fyp-esd",
+    "storage_bucket": "fyp-esd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19964727870:android:edd2096e42f2e07d",
+        "android_client_info": {
+          "package_name": "com.example.nomanikram.epilepsyseizuredetection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19964727870-837cvv3mhgbb934u2pmggq7ku39iurvc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nomanikram.epilepsyseizuredetection",
+            "certificate_hash": "a20fbabd348830b8c6de6b48910c5105e9c0b9e1"
+          }
+        },
+        {
+          "client_id": "19964727870-bk2pv0jqlog4cvdqnrc6s5uk8cmpbtjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxMHUwnPKZ_UUZoKCTJ0MGUoZ3e13G4FU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19964727870-bk2pv0jqlog4cvdqnrc6s5uk8cmpbtjl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

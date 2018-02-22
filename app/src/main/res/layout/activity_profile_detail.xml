@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.nomanikram.epilepsyseizuredetection.ProfileDetailActivity">
+
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:id="@+id/toolbar_profile_detail">
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/toolbar_profile_detail"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="Profile Details"
+        android:textColor="@color/colorRaisedButtonText" />
+
+    <!--Name-->
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_profile_detail"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="Name:"
+        android:id="@+id/textInputLayout_name">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_name"
+            android:inputType="text"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <!--Age-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputLayout_name"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="Age:"
+
+        android:id="@+id/textInputLayout_age"
+        >
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/txt_age"
+
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Gender -->
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:layout_below="@id/textInputLayout_age"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="32dp"
+        android:id="@+id/txt_gender"
+        />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_gender"
+        android:id="@+id/radiogroup_gender">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_gender"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:text="male"
+            android:id="@+id/radio_male"
+    />
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_male"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:text="female"
+        android:id="@+id/radio_female"
+        />
+    </RadioGroup>
+    <!-- Contact No -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radiogroup_gender"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="Contact no:"
+        android:id="@+id/textInputLayout_contactno"
+    >
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/txt_contactno"
+        />
+
+</android.support.design.widget.TextInputLayout>
+
+<android.support.v7.widget.AppCompatButton
+android:layout_below="@id/textInputLayout_contactno"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+style="@style/RaisedButton"
+android:layout_marginTop="16dp"
+android:layout_marginLeft="32dp"
+android:layout_marginRight="32dp"
+android:text="Done"
+    android:id="@+id/btn_done"
+    />
+
+
+
+
+    </RelativeLayout>

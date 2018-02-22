@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.nomanikram.epilepsyseizuredetection.RecordFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_record"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_margin="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/colorPrimary"
+        android:padding="0dp"
+        app:title="Record"
+        app:titleTextColor="@color/colorRaisedButtonText">
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_marginStart="0dp"
+            android:gravity="center_horizontal"
+            android:padding="0dp"
+            android:textColor="@color/colorRaisedButtonText"
+            android:text="Record"
+            android:visibility="gone"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_record"
+        android:layout_below="@id/toolbar_record"
+        >
+
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>
