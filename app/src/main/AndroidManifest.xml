@@ -20,7 +20,8 @@
         <activity android:name=".ProfileDetailActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AddPatientDetailActivity" />
-        <activity android:name=".InitialPatientDetailActivity"></activity>
+        <activity android:name=".InitialPatientDetailActivity" />
+        <activity android:name=".BluetoothConnectionActivity"></activity>
     </application>
 
 </manifest>
