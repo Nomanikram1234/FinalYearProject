@@ -1,8 +1,10 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +14,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +41,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private RelativeLayout relative;
 
+    private View view;
+
     ProgressDialog progressDialog;
+
+    Snackbar snackbar_loginfailure;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     @Override
@@ -43,9 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Intent intent = new Intent(getApplicationContext(),BluetoothConnectionActivity.class);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//        startActivity(intent);
+//        finish();
 
 
         username = (AppCompatEditText) findViewById(R.id.txt_username);
@@ -59,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
         relative= (RelativeLayout) findViewById(R.id.relativeLayout);
 
+        view= (View) findViewById(R.id.relativeLayout);
 
         setupAuthStateListener();
 
@@ -71,44 +82,54 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean is_Fields_empty = username.getText().toString().isEmpty() || password.getText().toString().isEmpty();
+                boolean is_usernameFields_empty = username.getText().toString().isEmpty() ;
+                boolean is_passwordFields_empty = password.getText().toString().isEmpty();
+                boolean email_wrong_pattern = !username.getText().toString().contains("@") || !username.getText().toString().contains(".com");
 
-                if(is_Fields_empty)
+                if(is_usernameFields_empty)
                 {
-                    // check if username field is empty
-                    if(username.getText().toString().isEmpty())
+                    usernameLayout.setErrorEnabled(true);
+                    usernameLayout.setError("Email field is empty");
+                }
+                else
+                {
+                    usernameLayout.setErrorEnabled(false);
+
+                    if(email_wrong_pattern)
                     {
                         usernameLayout.setErrorEnabled(true);
-                        usernameLayout.setError("Email field is empty");
+                        usernameLayout.setError("Email pattern is wrong");
                     }
                     else
                         usernameLayout.setErrorEnabled(false);
 
-                    // check if password field is empty
-                    if(password.getText().toString().isEmpty())
-                    {
-                        passwordLayout.setErrorEnabled(true);
-                        passwordLayout.setError("Password Field is empty");
-                    }
-                    else
-                        passwordLayout.setErrorEnabled(false);
-
-                    Log.w("Tag","Fields are empty");
-
-
+                }
+                if(is_passwordFields_empty)
+                {
+                    passwordLayout.setErrorEnabled(true);
+                    passwordLayout.setError("Password field is empty");
                 }
                 else
+                    passwordLayout.setErrorEnabled(false);
+
+
+
+                if( !is_usernameFields_empty && !is_passwordFields_empty && !email_wrong_pattern)
                 {
                     progressDialog = new ProgressDialog(LoginActivity.this);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setTitle("Signing in");
                     progressDialog.show();
+
+
 //                    progressDialog.hide();
                     login(username.getText().toString(), password.getText().toString());
 
 
                 }
+
+
             }
         });
 
@@ -172,10 +193,35 @@ public class LoginActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w("Tag","Login Failure!");
+              snackbar_loginfailure =  Snackbar.make(view,"Login Failure",Snackbar.LENGTH_SHORT);
+
+              View v = snackbar_loginfailure.getView();
+              v.setBackgroundColor(getResources().getColor(R.color.colorSnackbarBackgroundFailure));
+
+              TextView txt = (TextView) v.findViewById(android.support.design.R.id.snackbar_text);
+              txt.setTextColor(getResources().getColor(R.color.colorSnackbarText));
+
+              hideSoftKeyboard();
+
+              snackbar_loginfailure.show();
+              progressDialog.hide();
+              Log.w("Tag","Login Failure!");
+
+
             }
         });
 
+    }
+
+    private void hideSoftKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+        //to hide keyboard
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+        /* to show keyboard
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+         */
     }
 
 }

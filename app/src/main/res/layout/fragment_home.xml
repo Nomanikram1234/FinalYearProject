@@ -6,7 +6,7 @@
     tools:context="com.example.nomanikram.epilepsyseizuredetection.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.Toolbar
+       <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -18,7 +18,7 @@
         app:titleTextColor="@color/colorRaisedButtonText">
 
 
-        <android.support.v7.widget.AppCompatTextView
+            <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
@@ -47,9 +47,9 @@
            android:layout_width="96dp"
            android:layout_height="96dp" 
            android:layout_gravity="center_horizontal"
-           android:layout_marginTop="32dp"
-
-           android:src="@drawable/avatar"/>
+           android:layout_marginTop="12dp"
+           android:src="@drawable/avatar"
+           />
 
        <android.support.v7.widget.AppCompatTextView
            android:layout_width="wrap_content"

@@ -7,4 +7,8 @@
     <color name="colorRaisedButton">#2196F3</color>
     <color name="colorRaisedButtonText">#FFFFFF</color>
     <color name="colorFlatButton">#2196F3</color>
+    <color name="colorSnackbarBackground">#2196F3</color>
+    <color name="colorSnackbarBackgroundFailure">#EF5350</color>
+    <color name="colorSnackbarText">#FFFFFF</color>
+    <color name="colorSnackbarAction"></color>
 </resources>

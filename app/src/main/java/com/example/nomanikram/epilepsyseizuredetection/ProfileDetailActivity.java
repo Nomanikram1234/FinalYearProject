@@ -98,6 +98,10 @@ public class ProfileDetailActivity extends AppCompatActivity {
                         ( R.id.radio_male != radioButton_id &&
                         R.id.radio_female != radioButton_id) ;
 
+
+
+
+                // name field can not be empty
                 if(txt_name.getText().toString().isEmpty())
                 {
                   textInputLayout_name.setErrorEnabled(true);
@@ -106,48 +110,96 @@ public class ProfileDetailActivity extends AppCompatActivity {
                 else
                   textInputLayout_name.setErrorEnabled(false);
 
+
+                int age=0;
+                if(!txt_age.getText().toString().isEmpty())
+                age =Integer.parseInt(txt_age.getText().toString());
+
+                // age field can not be empty
                 if(txt_age.getText().toString().isEmpty())
                 {
                     textInputLayout_age.setErrorEnabled(true);
                     textInputLayout_age.setError("Age field is empty");
                 }
                 else
+                {
                     textInputLayout_age.setErrorEnabled(false);
 
+                    // age validation : age can only be between
+                    if(!(age >= 0 && age <=150))
+                    {
+                        textInputLayout_age.setErrorEnabled(true);
+                        textInputLayout_age.setError("Invalid Age");
+                    }
+                    else
+                        textInputLayout_age.setErrorEnabled(false);
 
+                }
+
+
+                // contact field can not be empty
                 if(txt_contactno.getText().toString().isEmpty())
                 {
                     textInputLayout_contactno.setErrorEnabled(true);
                     textInputLayout_contactno.setError("Contact no field is empty");
                 }
                 else
+                {
                     textInputLayout_contactno.setErrorEnabled(false);
+
+                    // contact number can be 11 to 15 digit long
+                    if(!(txt_contactno.getText().toString().length() >= 11 && txt_contactno.getText().toString().length() <= 15))
+                    {
+                        textInputLayout_contactno.setErrorEnabled(true);
+                        textInputLayout_contactno.setError("Contact no can be 11 to 15 digits long");
+                        Log.w("","Length: "+txt_contactno.getText().toString().length() );
+                    }
+                    else
+                    {
+                        textInputLayout_contactno.setErrorEnabled(false);
+
+                        // contact number cannot contain any symbol
+                        if(!(txt_contactno.getText().toString().contains(",") || !txt_contactno.getText().toString().contains(".")))
+                        {
+                            textInputLayout_contactno.setErrorEnabled(true);
+                            textInputLayout_contactno.setError("Contact no cannot contain any symbol");
+                        }
+                        else
+                            textInputLayout_contactno.setErrorEnabled(false);
+                    }
+                }
+
+
 
 
                 if(! (radioButton_id == R.id.radio_male || radioButton_id == R.id.radio_female))
                     Toast.makeText(getApplicationContext(),"Gender not Selected",Toast.LENGTH_SHORT).show();
 
-                if (!is_textfield_empty) {
 
-                    User user = new User();
-                    user.setUser_name(txt_name.getText().toString());
-                    user.setUser_age(txt_age.getText().toString());
-                    user.setUser_gender(check_radio_button.getText() + "");
-                    user.setUser_contactno(txt_contactno.getText().toString());
-                    user.setUser_id(mAuth.getCurrentUser().getUid());
+                Log.w("","Reached here");
+                if (!is_textfield_empty  ) {
+                    Log.w("","Reached here2");
+                    if(age >= 0 && age <=150) {
+                        Log.w("","Reached here3");
+                        User user = new User();
+                        user.setUser_name(txt_name.getText().toString());
+                        user.setUser_age(txt_age.getText().toString());
+                        user.setUser_gender(check_radio_button.getText() + "");
+                        user.setUser_contactno(txt_contactno.getText().toString());
+                        user.setUser_id(mAuth.getCurrentUser().getUid());
 
 
+                        DatabaseReference user_reference = mRef.child("users").child("" + user.getUser_id());
 
-                    DatabaseReference user_reference = mRef.child("users").child("" + user.getUser_id());
+                        mRef.child("users").child("" + mAuth.getCurrentUser().getUid()).child("name").setValue(user.getUser_name());
+                        user_reference.child("contact_no").setValue(user.getUser_contactno());
+                        user_reference.child("gender").setValue(user.getUser_gender());
+                        user_reference.child("age").setValue(user.getUser_age());
 
-                    mRef.child("users").child("" + mAuth.getCurrentUser().getUid()).child("name").setValue(user.getUser_name());
-                    user_reference.child("contact_no").setValue(user.getUser_contactno());
-                    user_reference.child("gender").setValue(user.getUser_gender());
-                    user_reference.child("age").setValue(user.getUser_age());
-
-                    Intent intent = new Intent(getApplicationContext(),InitialPatientDetailActivity.class);
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(getApplicationContext(), InitialPatientDetailActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                }
                 else
                     Log.w("Tag","Empty Fields");

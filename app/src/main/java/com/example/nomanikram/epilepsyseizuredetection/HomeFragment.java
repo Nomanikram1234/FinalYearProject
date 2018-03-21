@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
 
          userID = mAuth.getCurrentUser().getUid();
 
-        Toast.makeText(getActivity().getApplicationContext(),"SHOW: "+userID,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity().getApplicationContext(),"SHOW: "+userID,Toast.LENGTH_SHORT).show();
 
         Query query1 = reference.child("users").child(userID).child("Patient");
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
