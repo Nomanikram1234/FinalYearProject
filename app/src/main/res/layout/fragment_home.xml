@@ -18,7 +18,8 @@
         app:titleTextColor="@color/colorRaisedButtonText">
 
 
-            <android.support.v7.widget.AppCompatTextView
+
+           <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
@@ -30,7 +31,8 @@
             android:visibility="gone"
             />
 
-    </android.support.v7.widget.Toolbar>
+
+       </android.support.v7.widget.Toolbar>
 
 
 
@@ -41,7 +43,7 @@
        android:orientation="vertical"
        android:background="#E3F2FD"
 
-       >
+       android:id="@+id/linearLayout2">
 
        <de.hdodenhof.circleimageview.CircleImageView
            android:layout_width="96dp"
@@ -277,6 +279,17 @@
 
    </LinearLayout>
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/bluetoothConnection"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/bluetooth_white"
+
+        />
 
 
 </RelativeLayout>

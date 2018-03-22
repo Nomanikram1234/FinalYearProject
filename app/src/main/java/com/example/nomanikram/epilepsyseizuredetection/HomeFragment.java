@@ -1,13 +1,16 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.nomanikram.epilepsyseizuredetection.models.Patient;
@@ -33,6 +36,7 @@ public class HomeFragment extends Fragment {
     AppCompatTextView txt_weight;
     AppCompatTextView txt_height;
 
+    ImageView imageButton_connectivity;
 
     FirebaseAuth mAuth;
     DatabaseReference reference;
@@ -54,14 +58,27 @@ public class HomeFragment extends Fragment {
         txt_weight = (AppCompatTextView) view.findViewById(R.id.txt_weight);
         txt_height = (AppCompatTextView) view.findViewById(R.id.txt_height);
 
+        imageButton_connectivity  =(ImageView) view.findViewById(R.id.bluetoothConnection);
+
+
+
 //        txt_name = (AppCompatTextView) view.findViewById(R.id.txt_name);
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
 
-         userID = mAuth.getCurrentUser().getUid();
+        userID = mAuth.getCurrentUser().getUid();
 
 //        Toast.makeText(getActivity().getApplicationContext(),"SHOW: "+userID,Toast.LENGTH_SHORT).show();
+
+
+        imageButton_connectivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),BluetoothConnectionActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Query query1 = reference.child("users").child(userID).child("Patient");
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
