@@ -103,6 +103,8 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                     textInputLayout_name.setErrorEnabled(false);
                 }
 
+
+
                 // check of Age Field is empty
                 if(txt_age.getText().toString().isEmpty()){
                     textInputLayout_age.setErrorEnabled(true);
@@ -111,17 +113,43 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 else
                 {
                     textInputLayout_age.setErrorEnabled(false);
+
+                    if( !( Integer.parseInt(txt_age.getText().toString()) >= 0 && Integer.parseInt(txt_age.getText().toString()) <= 200) ){
+                        textInputLayout_age.setErrorEnabled(true);
+                        textInputLayout_age.setError("Age is Invalid ");
+                    }
+                    else
+                    {
+                        textInputLayout_age.setErrorEnabled(false);
+                    }
                 }
 
+
+
+
                 // check if Height Field is empty
-                if(txt_name.getText().toString().isEmpty()){
+                if(txt_height.getText().toString().isEmpty()){
                     textInputLayout_height.setErrorEnabled(true);
                     textInputLayout_height.setError("Height field is empty");
                 }
                 else
                 {
                     textInputLayout_height.setErrorEnabled(false);
+
+
+                    if( !( Integer.parseInt(txt_height.getText().toString()) >=0 && Integer.parseInt(txt_height.getText().toString()) <= 300))
+                    {
+                        textInputLayout_height.setErrorEnabled(true);
+                        textInputLayout_height.setError("Height is invalid i.e Max height = 300");
+                    }
+                    else
+                    {
+                        textInputLayout_height.setErrorEnabled(false);
+                    }
                 }
+
+
+
 
                 // check if Weight Field is empty
                 if(txt_weight.getText().toString().isEmpty()){
@@ -131,6 +159,16 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 else
                 {
                     textInputLayout_weight.setErrorEnabled(false);
+
+                    if( !( Integer.parseInt(txt_weight.getText().toString()) >= 0 && Integer.parseInt(txt_weight.getText().toString()) <= 600 )){
+                        textInputLayout_weight.setErrorEnabled(true);
+                        textInputLayout_weight.setError("Weight is Invalid. Max weight = 600");
+                    }
+                    else
+                    {
+                        textInputLayout_weight.setErrorEnabled(false);
+                    }
+
                 }
 
                 // check if any Radio Button for Gender is selected
@@ -138,7 +176,11 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Gender not Selected",Toast.LENGTH_SHORT).show();
 
                 // Check if all fields are filled
-                if(!is_fields_empty) {
+                if(!is_fields_empty &&
+                        ( Integer.parseInt(txt_weight.getText().toString()) >= 0 && Integer.parseInt(txt_weight.getText().toString()) <= 600 ) &&
+                        ( Integer.parseInt(txt_height.getText().toString()) >=0 && Integer.parseInt(txt_height.getText().toString()) <= 300) )
+
+                {
                     Toast.makeText(getApplicationContext(), "Not Empty", Toast.LENGTH_SHORT).show();
 
                     /* Write Working Code Here */
