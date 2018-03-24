@@ -1,5 +1,7 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -12,8 +14,10 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nomanikram.epilepsyseizuredetection.models.Data;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,10 +35,15 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference database;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        txt_pulse = (TextView) findViewById(R.id);
+
 
         bottom = (BottomNavigationView) findViewById(R.id.bottom);
 
@@ -120,6 +129,31 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.context,fragment,"FragmentName");
         fragmentTransaction.commit();
+    }
+
+    public static class SensorReceiver extends BroadcastReceiver {
+
+        //        static Data data;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Data  data = (Data) intent.getSerializableExtra("MyObject");
+
+            String txt_pulse = data.pulse;
+            String txt_temp = data.temp;
+
+            Log.w("TAG","MainActivity\n"+"temp: "+txt_temp+"\npulse: "+txt_pulse);
+
+//            doublev.setText(txt_temp);
+//            pulse1.setText(txt_pulse);
+
+
+//           Name.setText("    Noman ");
+//
+//            Intent intent_d = new Intent(context,MainActivity.class);
+//            intent_d.putExtra("MyHealth,data",data);
+
+
+        }
     }
 
 }

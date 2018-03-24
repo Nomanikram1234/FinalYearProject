@@ -1,6 +1,8 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nomanikram.epilepsyseizuredetection.models.Data;
 import com.example.nomanikram.epilepsyseizuredetection.models.Patient;
 import com.example.nomanikram.epilepsyseizuredetection.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +39,8 @@ public class HomeFragment extends Fragment {
     AppCompatTextView txt_age;
     AppCompatTextView txt_weight;
     AppCompatTextView txt_height;
+  public static AppCompatTextView txt_pulse;
+  public static AppCompatTextView txt_temp;
 
     ImageView imageButton_connectivity;
 
@@ -57,6 +63,9 @@ public class HomeFragment extends Fragment {
         txt_age = (AppCompatTextView) view.findViewById(R.id.txt_age);
         txt_weight = (AppCompatTextView) view.findViewById(R.id.txt_weight);
         txt_height = (AppCompatTextView) view.findViewById(R.id.txt_height);
+        txt_pulse = (AppCompatTextView) view.findViewById(R.id.txt_pulserate);
+        txt_temp = (AppCompatTextView) view.findViewById(R.id.txt_temperature);
+
 
         imageButton_connectivity  =(ImageView) view.findViewById(R.id.bluetoothConnection);
 
@@ -112,5 +121,31 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+    public static class SensorReceiver extends BroadcastReceiver {
 
+        //        static Data data;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Data data = (Data) intent.getSerializableExtra("MyObject");
+
+            String pulse = data.pulse;
+            String temp = data.temp;
+
+            Log.w("TAG","HomeFragment\n"+"temp: "+temp+"\npulse: "+pulse);
+
+            txt_pulse.setText(pulse+"bmp");
+            txt_temp.setText(temp+"˚C");
+
+//            doublev.setText(txt_temp);
+//            pulse1.setText(txt_pulse);
+
+
+//           Name.setText("    Noman ");
+//
+//            Intent intent_d = new Intent(context,MainActivity.class);
+//            intent_d.putExtra("MyHealth,data",data);
+
+
+        }
+    }
 }

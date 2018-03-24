@@ -229,9 +229,10 @@
                    />
 
                <android.support.v7.widget.AppCompatTextView
+                   android:id="@+id/txt_pulserate"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="84bmp"
+
                    android:textSize="32sp"
                    android:layout_gravity="center_horizontal|center_vertical"/>
 
@@ -265,9 +266,10 @@
                    />
 
                <android.support.v7.widget.AppCompatTextView
+                   android:id="@+id/txt_temperature"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="100˚C"
+
                    android:textSize="32sp"
 
                    android:layout_gravity="center_horizontal|center_vertical"/>

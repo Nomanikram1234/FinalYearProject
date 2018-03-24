@@ -27,6 +27,12 @@
         <activity android:name=".AddPatientDetailActivity" />
         <activity android:name=".InitialPatientDetailActivity" />
         <activity android:name=".BluetoothConnectionActivity"></activity>
+
+
+
+        <service android:name=".MyBluetoothService" android:enabled="true" android:exported="true"></service>
+        <receiver android:name=".HomeFragment$SensorReceiver"/>
+        <!--<receiver android:name=".MainActivity$SensorReceiver"/>-->
     </application>
 
 </manifest>
