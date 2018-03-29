@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,8 +23,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import static android.webkit.WebSettings.PluginState.ON;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
 //      startActivity(intent);
 //      finish();
 
+        login("jani@gmail.com","Nomi1234");
+
         username = (AppCompatEditText) findViewById(R.id.txt_username);
         password = (AppCompatEditText) findViewById(R.id.txt_password);
 
@@ -88,13 +87,17 @@ public class LoginActivity extends AppCompatActivity {
                 boolean is_passwordFields_empty = password.getText().toString().isEmpty();
                 boolean email_wrong_pattern = !username.getText().toString().contains("@") || !username.getText().toString().contains(".com");
 
-                if (is_usernameFields_empty) {
+                if (is_usernameFields_empty)
+                {
                     usernameLayout.setErrorEnabled(true);
                     usernameLayout.setError("Email field is empty");
-                } else {
+                }
+                else
+                {
                     usernameLayout.setErrorEnabled(false);
 
-                    if (email_wrong_pattern) {
+                    if (email_wrong_pattern)
+                    {
                         usernameLayout.setErrorEnabled(true);
                         usernameLayout.setError("Email pattern is wrong");
                     } else
@@ -104,9 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (is_passwordFields_empty) {
                     passwordLayout.setErrorEnabled(true);
                     passwordLayout.setError("Password field is empty");
-                } else
+                }
+                else
                     passwordLayout.setErrorEnabled(false);
-
 
                 if (!is_usernameFields_empty && !is_passwordFields_empty && !email_wrong_pattern) {
                     progressDialog = new ProgressDialog(LoginActivity.this);
@@ -114,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.setIndeterminate(true);
                     progressDialog.setTitle("Signing in");
                     progressDialog.show();
+
 
                     login(username.getText().toString(), password.getText().toString());
 
@@ -129,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         btn_help_login.setOnClickListener(new View.OnClickListener() {
             @Override

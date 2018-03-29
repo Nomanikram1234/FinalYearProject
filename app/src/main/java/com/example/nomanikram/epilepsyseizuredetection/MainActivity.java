@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nomanikram.epilepsyseizuredetection.models.Contact;
 import com.example.nomanikram.epilepsyseizuredetection.models.Data;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     DatabaseReference database;
+
+    static  int no;
+
+    static String total_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
+
+        update_contacts();
 
         Query query1 = database.child("users").equalTo(mAuth.getCurrentUser().getUid());
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -137,6 +144,61 @@ public class MainActivity extends AppCompatActivity {
 
             Log.w("TAG","MainActivity\n"+"temp: "+txt_temp+"\npulse: "+txt_pulse);
         }
+    }
+    private void update_contacts(){
+
+        Contact c3= (Contact) getIntent().getSerializableExtra("MyObject");
+
+        if(c3 != null)
+        {
+
+            DatabaseReference user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            final DatabaseReference contact_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
+
+
+
+            Query query = contact_ref;
+
+            boolean first_run = false;
+
+            if(first_run) {
+                query.addValueEventListener((new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Log.w("TAG", "COPYRIGHTS: " + dataSnapshot.child("Size").getValue());
+                        Log.w("TAG", "Exists: " + dataSnapshot.child("Size").exists());
+
+                        if (dataSnapshot.child("Size").getValue().equals(null)) {
+//                      contact_ref.child("Size").setValue("0");
+                            total_no = "0";
+                            no = Integer.parseInt(total_no);
+                        } else {
+                            total_no = (String) dataSnapshot.child("Size").getValue();
+                            Log.w("", "Size:" + total_no);
+                            no = Integer.parseInt(total_no);
+                            contact_ref.child("Size").setValue("" + total_no);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }));
+            }
+
+            total_no = ""+no++;
+
+            Log.w("TAG","Total Number now: " +total_no);
+
+//          contact_ref.child("Contact").child("Size").setValue(""+total_contants);
+            contact_ref.child("Size").setValue(""+total_no);
+            contact_ref.child("contact "+total_no).child("Name").setValue(""+c3.contact_name);
+            contact_ref.child("contact "+total_no).child("Number").setValue(""+c3.contact_no);}
+//       Log.w("","Contact Name: "+ c3.contact_name);
+
     }
 
 }

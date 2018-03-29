@@ -1,9 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.nomanikram.epilepsyseizuredetection.ContactFragment">
+
+
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.Toolbar
@@ -37,11 +40,45 @@
 
 <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/toolbar_contact"
+    android:layout_height="wrap_content"
+
+  android:layout_weight="90"
     android:id="@+id/recycler_contact"
     >
 
 </android.support.v7.widget.RecyclerView>
 
-</RelativeLayout>
+
+<android.support.v7.widget.AppCompatButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginTop="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+
+    android:layout_weight="5"
+
+    android:id="@+id/btn_add_manually"
+
+    android:layout_centerHorizontal="true"
+    android:text="Add Manually"
+    style="@style/RaisedButton"/>
+
+    <android.support.v7.widget.AppCompatButton
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+
+        android:layout_weight="5"
+        android:id="@+id/btn_add_from_contacts"
+        android:layout_centerHorizontal="true"
+
+        android:text="Add from Contacts"
+        style="@style/RaisedButton"
+        />
+</LinearLayout>
