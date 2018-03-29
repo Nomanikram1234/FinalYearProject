@@ -29,14 +29,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottom ;
+    private BottomNavigationView bottom;
 
-    FirebaseAuth mAuth;
-    DatabaseReference database;
+    private FirebaseAuth mAuth;
+    private DatabaseReference database;
 
-    static  int no;
+    private static int no;
 
-    static String total_no;
+    private static String total_no;
+
+    private static Contact c3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         bottom = (BottomNavigationView) findViewById(R.id.bottom);
 
-        mAuth =FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
 
-        Log.w("","UID: "+mAuth.getCurrentUser().getUid());
+        Log.w("", "UID: " + mAuth.getCurrentUser().getUid());
 
         HomeFragment fragment = new HomeFragment();
         setFragment(fragment);
@@ -63,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren())
-                    Log.w("CHECKING: ",""+singleSnapshot.getValue(String.class));
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren())
+                    Log.w("CHECKING: ", "" + singleSnapshot.getValue(String.class));
             }
 
             @Override
@@ -79,18 +81,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if(id == R.id.nav_home)
-                {
+                if (id == R.id.nav_home) {
 
                     HomeFragment fragment = new HomeFragment();
                     setFragment(fragment);
 
 
-                    Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_LONG);
-                    Log.w("TAG","Home");
-                }
-                else if(id == R.id.nav_patient)
-                {
+                    Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_LONG);
+                    Log.w("TAG", "Home");
+                } else if (id == R.id.nav_patient) {
 
                     PatientFragment fragment = new PatientFragment();
                     setFragment(fragment);
@@ -98,27 +97,22 @@ public class MainActivity extends AppCompatActivity {
                     Log.w("TAG", "Patient");
 
                     Toast.makeText(MainActivity.this, "Patient", Toast.LENGTH_LONG);
-                }
-                else if(id == R.id.nav_contact)
-                {
+                } else if (id == R.id.nav_contact) {
                     ContactFragment fragment = new ContactFragment();
                     setFragment(fragment);
-                    Log.w("TAG","Contact");
+                    Log.w("TAG", "Contact");
 
-                }
-                else if(id == R.id.nav_records)
-                {
+                } else if (id == R.id.nav_records) {
                     RecordFragment fragment = new RecordFragment();
                     setFragment(fragment);
 
-                    Log.w("TAG","Record");
-                }
-                else if(id == R.id.nav_setting){
+                    Log.w("TAG", "Record");
+                } else if (id == R.id.nav_setting) {
 
                     SettingFragment fragment = new SettingFragment();
                     setFragment(fragment);
 
-                    Log.w("TAG","Setting");
+                    Log.w("TAG", "Setting");
                 }
                 return true;
             }
@@ -126,10 +120,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Setting Fragment on View
-    private void setFragment(Fragment fragment)
-    {
+    private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.context,fragment,"FragmentName");
+        fragmentTransaction.replace(R.id.context, fragment, "FragmentName");
         fragmentTransaction.commit();
     }
 
@@ -137,49 +130,59 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Data  data = (Data) intent.getSerializableExtra("MyObject");
+            Data data = (Data) intent.getSerializableExtra("MyObject");
 
             String txt_pulse = data.pulse;
             String txt_temp = data.temp;
 
-            Log.w("TAG","MainActivity\n"+"temp: "+txt_temp+"\npulse: "+txt_pulse);
+            Log.w("TAG", "MainActivity\n" + "temp: " + txt_temp + "\npulse: " + txt_pulse);
         }
     }
-    private void update_contacts(){
 
-        Contact c3= (Contact) getIntent().getSerializableExtra("MyObject");
+    private void update_contacts() {
 
-        if(c3 != null)
-        {
+       c3 = (Contact) getIntent().getSerializableExtra("MyObject");
+
+        if (c3 != null) {
 
             DatabaseReference user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
             final DatabaseReference contact_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
 
 
-
             Query query = contact_ref;
 
-            boolean first_run = false;
-
-            if(first_run) {
-                query.addValueEventListener((new ValueEventListener() {
+                query.addListenerForSingleValueEvent((new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        Log.w("TAG", "COPYRIGHTS: " + dataSnapshot.child("Size").getValue());
-                        Log.w("TAG", "Exists: " + dataSnapshot.child("Size").exists());
 
-                        if (dataSnapshot.child("Size").getValue().equals(null)) {
-//                      contact_ref.child("Size").setValue("0");
-                            total_no = "0";
-                            no = Integer.parseInt(total_no);
-                        } else {
-                            total_no = (String) dataSnapshot.child("Size").getValue();
-                            Log.w("", "Size:" + total_no);
-                            no = Integer.parseInt(total_no);
+                        if (!dataSnapshot.child("Size").exists())
+                        {
+                            no = 0;
+                            total_no="0";
+
                             contact_ref.child("Size").setValue("" + total_no);
+                            contact_ref.child("contact " + total_no).child("Name").setValue("" + c3.contact_name);
+                            contact_ref.child("contact " + total_no).child("Number").setValue("" + c3.contact_no);
                         }
+                        else
+                        {
+                            Log.w("","total_no: "+total_no);
+                            total_no = (String) dataSnapshot.child("Size").getValue();
+                            no = Integer.parseInt(total_no);
+
+                            no++;
+                            total_no = ""+no;
+
+                            contact_ref.child("Size").setValue("" + total_no);
+                            contact_ref.child("contact " + total_no).child("Name").setValue("" + c3.contact_name);
+                            contact_ref.child("contact " + total_no).child("Number").setValue("" + c3.contact_no);
+
+                        }
+
+
+
                     }
 
                     @Override
@@ -187,18 +190,10 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }));
-            }
 
-            total_no = ""+no++;
 
-            Log.w("TAG","Total Number now: " +total_no);
 
-//          contact_ref.child("Contact").child("Size").setValue(""+total_contants);
-            contact_ref.child("Size").setValue(""+total_no);
-            contact_ref.child("contact "+total_no).child("Name").setValue(""+c3.contact_name);
-            contact_ref.child("contact "+total_no).child("Number").setValue(""+c3.contact_no);}
-//       Log.w("","Contact Name: "+ c3.contact_name);
+        }
 
     }
-
 }
