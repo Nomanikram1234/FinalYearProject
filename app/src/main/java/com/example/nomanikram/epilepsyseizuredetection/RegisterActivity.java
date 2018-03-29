@@ -186,7 +186,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                     snackbar.show();
 
-
                     Log.w("Tag", "Registration Failed");
 
                 }

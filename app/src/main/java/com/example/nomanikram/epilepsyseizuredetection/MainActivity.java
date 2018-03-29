@@ -29,21 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottom ;
-//    Intent intent;
-//    AppCompatTextView txt;
 
     FirebaseAuth mAuth;
     DatabaseReference database;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        txt_pulse = (TextView) findViewById(R.id);
-
 
         bottom = (BottomNavigationView) findViewById(R.id.bottom);
 
@@ -79,16 +72,18 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if(id == R.id.nav_home){
+                if(id == R.id.nav_home)
+                {
 
                     HomeFragment fragment = new HomeFragment();
                     setFragment(fragment);
 
 
                     Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_LONG);
-                    Log.w("TAG","Home");}
-
-             else   if(id == R.id.nav_patient) {
+                    Log.w("TAG","Home");
+                }
+                else if(id == R.id.nav_patient)
+                {
 
                     PatientFragment fragment = new PatientFragment();
                     setFragment(fragment);
@@ -97,15 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(MainActivity.this, "Patient", Toast.LENGTH_LONG);
                 }
-
-                else if(id == R.id.nav_contact){
+                else if(id == R.id.nav_contact)
+                {
                     ContactFragment fragment = new ContactFragment();
                     setFragment(fragment);
                     Log.w("TAG","Contact");
 
                 }
-                else if(id == R.id.nav_records){
-
+                else if(id == R.id.nav_records)
+                {
                     RecordFragment fragment = new RecordFragment();
                     setFragment(fragment);
 
@@ -118,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.w("TAG","Setting");
                 }
-
                 return true;
             }
         });
     }
 
     // Setting Fragment on View
-    private void setFragment(Fragment fragment){
+    private void setFragment(Fragment fragment)
+    {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.context,fragment,"FragmentName");
         fragmentTransaction.commit();
@@ -133,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static class SensorReceiver extends BroadcastReceiver {
 
-        //        static Data data;
         @Override
         public void onReceive(Context context, Intent intent) {
             Data  data = (Data) intent.getSerializableExtra("MyObject");
@@ -142,17 +136,6 @@ public class MainActivity extends AppCompatActivity {
             String txt_temp = data.temp;
 
             Log.w("TAG","MainActivity\n"+"temp: "+txt_temp+"\npulse: "+txt_pulse);
-
-//            doublev.setText(txt_temp);
-//            pulse1.setText(txt_pulse);
-
-
-//           Name.setText("    Noman ");
-//
-//            Intent intent_d = new Intent(context,MainActivity.class);
-//            intent_d.putExtra("MyHealth,data",data);
-
-
         }
     }
 

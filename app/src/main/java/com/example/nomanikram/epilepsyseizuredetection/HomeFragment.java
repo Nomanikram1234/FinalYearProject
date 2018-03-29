@@ -39,8 +39,8 @@ public class HomeFragment extends Fragment {
     AppCompatTextView txt_age;
     AppCompatTextView txt_weight;
     AppCompatTextView txt_height;
-  public static AppCompatTextView txt_pulse;
-  public static AppCompatTextView txt_temp;
+    public static AppCompatTextView txt_pulse;
+    public static AppCompatTextView txt_temp;
 
     ImageView imageButton_connectivity;
 
@@ -135,15 +135,6 @@ public class HomeFragment extends Fragment {
 
             txt_pulse.setText(pulse+"bmp");
             txt_temp.setText(temp+"˚C");
-
-//            doublev.setText(txt_temp);
-//            pulse1.setText(txt_pulse);
-
-
-//           Name.setText("    Noman ");
-//
-//            Intent intent_d = new Intent(context,MainActivity.class);
-//            intent_d.putExtra("MyHealth,data",data);
 
 
         }

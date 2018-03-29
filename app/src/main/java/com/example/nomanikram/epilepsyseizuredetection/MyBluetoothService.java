@@ -53,9 +53,6 @@ public class MyBluetoothService extends Service  {
     @Override
     public int onStartCommand(Intent tent, int flags, int id) {
 
-
-
-
         Bundle b = tent.getExtras();
         BluetoothDevice device = b.getParcelable("data");
 
@@ -74,7 +71,9 @@ public class MyBluetoothService extends Service  {
         startActivity(senddata);
 
         return flags;
+
     }
+
     private class ThreadConnectBTdevice extends Thread {
 
         private BluetoothSocket bluetoothSocket = null;
@@ -190,41 +189,50 @@ public class MyBluetoothService extends Service  {
             String strRx = "";
 
             while (true) {
-                try {
+                try
+                {
 
                     //****ADDED SLEEP HERE SO THE BUFFER CAN FILL UP AND WE GET WHOLE DATA TOGETHER
                     //****
 
-                    try{Thread.sleep(8000);}catch (Exception e){}
-                    bytes = connectedInputStream.read(buffer);
-                    final String strReceived = new String(buffer, 0, bytes);
-                    final String strByteCnt = String.valueOf(bytes) + " bytes received.\n";
+                    try
+                    {
+                        Thread.sleep(8000);}catch (Exception e){}
+                        bytes = connectedInputStream.read(buffer);
+                        final String strReceived = new String(buffer, 0, bytes);
+                        final String strByteCnt = String.valueOf(bytes) + " bytes received.\n";
 
 
+                        textStatus=strReceived;
 
+                        try
+                        {
+                            String s=textStatus;
+                            String tem="",pul="";
+                            try
+                            {
+                                tem = s.substring(s.indexOf("(") + 1);
+                                tem = tem.substring(0, tem.indexOf(")"));
 
-                    textStatus=strReceived;
-                    // doublev.setText(textStatus.toString());
-                    try {
-                        String s=textStatus;
-                        String tem="",pul="";
-                        try {
-                            tem = s.substring(s.indexOf("(") + 1);
-                            tem = tem.substring(0, tem.indexOf(")"));
+                                temp = tem;
 
-
-                            //  doublev.setText(tem);
-                            temp = tem;
-
-                        }catch(Exception e){ temp="Temperature not received";}
-                        try {
-                            pul = s.substring(s.indexOf("{") + 1);
-                            pul = pul.substring(0, pul.indexOf("}"));
-                            pulse=pul;
-                        }catch(Exception e){pulse="Pulse not Received";}
-                        try {
-                            int temp1 = Integer.parseInt(temp);
-                            int pul1=Integer.parseInt(pulse);
+                        }
+                        catch(Exception e)
+                        {
+                            temp="Temperature not received";}
+                            try
+                            {
+                                pul = s.substring(s.indexOf("{") + 1);
+                                pul = pul.substring(0, pul.indexOf("}"));
+                                pulse=pul;
+                            }
+                            catch(Exception e)
+                            {
+                                pulse="Pulse not Received";}
+                                try
+                                {
+                                    int temp1 = Integer.parseInt(temp);
+                                    int pul1=Integer.parseInt(pulse);
 
                             //doublev.setText("t"+temp1);
 
@@ -239,33 +247,41 @@ public class MyBluetoothService extends Service  {
 //                                        temp1=temp1-18;
 //                                        doublev.setText(temp1);
 //                                    }
-                            if(temp1<37){
+                                if(temp1<37)
+                                {
                                 textStatus="37";
-                            }
-                            if(temp1>38){
+                                }
+                                if(temp1>38)
+                                {
                                 textStatus="38";
-                            }
-                            if(pul1<100){
+                                }
+                                if(pul1<100)
+                                {
                                 pul1=pul1;
-                            }
-                            if(pul1>120){
+                                }
+                                if(pul1>120)
+                                {
                                 pulse="100";
-                            }
-                            //AFTER SUBTRACTING NEW VALUE OF PUL DONE CUZ OF CHEAP SENSOR
+                                }
+                                //AFTER SUBTRACTING NEW VALUE OF PUL DONE CUZ OF CHEAP SENSOR
 
-                        }catch(Exception e){
-                            pulse="--";
-                        }
-                        // doublev.setText(""+temp1);
+                                }
+                                catch(Exception e)
+                                {
+                                    pulse="--";
+                                }
 
-                    }catch (Exception e){
+                        }catch (Exception e)
+                        {
                         e.printStackTrace();
-                    }
+                        }
 
-                    textByteCnt=strByteCnt;
+                        textByteCnt=strByteCnt;
 
 
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
 
@@ -274,29 +290,14 @@ public class MyBluetoothService extends Service  {
 
                 }
 
-                Bundle tempandpulse=new Bundle();
-
-
                 Data obt = new Data();
-//               obt.temp = textStatus;
-//               obt.pulse= pulse;
-
                 obt.temp = temp;
                 obt.pulse= pulse;
 
                 Log.w("TAG","MyBluetoothService\n"+"temp: "+temp+"\npulse: "+pulse);
-//
-//                Log.w("","TEMP"+temp);
-//                Log.w("","PULSE"+pulse);
 
                 Intent inteni = new Intent(getApplicationContext(),HomeFragment.SensorReceiver.class);
-//                senddata.putExtra("MyObject",obt);
                 inteni.putExtra("MyObject",obt);
-                //    tempandpulse.putString("temp",textStatus);
-                //   tempandpulse.putString("pulse",pulse);
-//                senddata.putExtras(tempandpulse);
-
-//Intent inteni = new Intent(getApplicationContext(),SensorReceiver.class);
                 sendBroadcast(inteni);
 
             }

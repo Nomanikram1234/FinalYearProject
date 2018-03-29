@@ -30,10 +30,10 @@ public class BluetoothConnectionActivity extends AppCompatActivity {
 
     RecyclerView recycleview;
 
-  public  static  Context context_push;
+    public  static  Context context_push;
 
     ListView listViewPairedDevice;
-   static  BluetoothAdapter bluetoothAdapter;
+    static  BluetoothAdapter bluetoothAdapter;
 
     public static Object bluetoothdevice;
 
