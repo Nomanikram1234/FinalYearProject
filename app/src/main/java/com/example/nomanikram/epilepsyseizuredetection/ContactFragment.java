@@ -41,8 +41,8 @@ public class ContactFragment extends Fragment {
 
     AppCompatButton btn_add_manually;
     AppCompatButton btn_add_from_contacts;
-   static AppCompatEditText txt_number;
-  static  AppCompatEditText txt_name;
+    static AppCompatEditText txt_number;
+    static  AppCompatEditText txt_name;
 
     AlertDialog alertDialog;
     AlertDialog.Builder builder;

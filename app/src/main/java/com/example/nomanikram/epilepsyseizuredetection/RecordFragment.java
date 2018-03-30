@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.nomanikram.epilepsyseizuredetection.models.Record;
 import com.example.nomanikram.epilepsyseizuredetection.views.RecycleAdapter_record;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,11 @@ import java.util.List;
  */
 public class RecordFragment extends Fragment {
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference database;
 
+    private static DatabaseReference user_reference;
+    private static DatabaseReference record_ref;
 
     RecyclerView recycleview;
 
@@ -36,10 +43,15 @@ public class RecordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record, container, false);
+
         recycleview = (RecyclerView) view.findViewById(R.id.recycler_record);
         List<Record> recorder = new ArrayList<Record>();
 
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference();
 
+        user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        record_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
 
         Record r1 = new Record();
         r1.heartbeat = "85";

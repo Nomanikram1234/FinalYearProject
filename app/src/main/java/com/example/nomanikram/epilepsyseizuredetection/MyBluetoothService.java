@@ -16,19 +16,24 @@ import android.widget.Toast;
 
 import com.example.nomanikram.epilepsyseizuredetection.MainActivity;
 import com.example.nomanikram.epilepsyseizuredetection.models.Data;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 public class MyBluetoothService extends Service  {
-    ListView listViewPairedDevice;
-    BluetoothAdapter bluetoothAdapter;
+//    ListView listViewPairedDevice;
+//    BluetoothAdapter bluetoothAdapter;
     Intent senddata;
     private static final int REQUEST_ENABLE_BT = 1;
-    String textInfo;
+//    String textInfo;
 
     private UUID myUUID;
     private final String UUID_STRING_WELL_KNOWN_SPP =
@@ -39,6 +44,19 @@ public class MyBluetoothService extends Service  {
     ThreadConnected myThreadConnected;
 
     String temp;
+
+    Date d;
+
+   static SimpleDateFormat date;
+   static SimpleDateFormat time;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference database;
+
+    private static DatabaseReference user_reference;
+    private static DatabaseReference record_ref;
+
+    static int count;
 
     public MyBluetoothService() {
     }
@@ -55,6 +73,19 @@ public class MyBluetoothService extends Service  {
 
         Bundle b = tent.getExtras();
         BluetoothDevice device = b.getParcelable("data");
+
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference();
+
+        user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        record_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
+
+
+
+
+
+
+
 
         Log.w("","Service started: "+device);
 
@@ -114,36 +145,32 @@ public class MyBluetoothService extends Service  {
                 }
             }
 
+            // if connected successfully
             if(success){
-                //connect successful
-
-//
-//                Toast.makeText(getApplicationContext(), "connect successful:\n"
-//                        + "BluetoothSocket: " + bluetoothSocket + "\n"
-//                        + "BluetoothDevice: " + bluetoothDevice, Toast.LENGTH_SHORT).show();
-
-
-// object of class thread connected
+                // object of class thread connected
                 startThreadConnected(bluetoothSocket);
+            }
+            // if connection failed
+            else
+            {
 
-            }else{
-                //fail
             }
         }
 
-        public void cancel() {
-
+        public void cancel()
+        {
             Toast.makeText(getApplicationContext(),
                     "close bluetoothSocket",
                     Toast.LENGTH_LONG).show();
-
-            try {
+            try
+            {
                 bluetoothSocket.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
         }
 
     }
@@ -293,6 +320,20 @@ public class MyBluetoothService extends Service  {
                 Data obt = new Data();
                 obt.temp = temp;
                 obt.pulse= pulse;
+
+
+                time = new SimpleDateFormat("HH:mm:ss");
+                date = new SimpleDateFormat("dd/MM/yyyy");
+                d = new Date();
+
+                    record_ref.child("count").setValue(count);
+                    record_ref.child("record "+count).child("pulse").setValue(""+obt.pulse);
+                    record_ref.child("record "+count).child("temperture").setValue(""+obt.temp);
+                    record_ref.child("record "+count).child("acceleromenter").setValue("N/A");
+                    record_ref.child("record "+count).child("time").setValue(""+time.format(d));
+                    record_ref.child("record "+count).child("date").setValue(""+date.format(d));
+                    count++;
+//
 
                 Log.w("TAG","MyBluetoothService\n"+"temp: "+temp+"\npulse: "+pulse);
 
