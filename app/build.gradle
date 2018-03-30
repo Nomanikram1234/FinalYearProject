@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.0.0-beta1'
     implementation 'com.alexzh:circleimageview:1.2.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
 }
 
 

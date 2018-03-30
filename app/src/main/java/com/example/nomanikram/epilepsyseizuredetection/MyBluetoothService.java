@@ -17,8 +17,12 @@ import android.widget.Toast;
 import com.example.nomanikram.epilepsyseizuredetection.MainActivity;
 import com.example.nomanikram.epilepsyseizuredetection.models.Data;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +51,8 @@ public class MyBluetoothService extends Service  {
 
     Date d;
 
+    static boolean first_run = true;
+
    static SimpleDateFormat date;
    static SimpleDateFormat time;
 
@@ -57,6 +63,8 @@ public class MyBluetoothService extends Service  {
     private static DatabaseReference record_ref;
 
     static int count;
+
+    static Query query;
 
     public MyBluetoothService() {
     }
@@ -80,9 +88,30 @@ public class MyBluetoothService extends Service  {
         user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         record_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
 
+        query = record_ref.child("count");
 
 
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.w("","DS: "+dataSnapshot);
+                if (dataSnapshot.getValue() == null  )
+                {
+                    count = 0;
+                    first_run=false;
+                }else
+                    {
+                    count = Integer.parseInt("" + dataSnapshot.getValue());
+                    Log.w("", "DataSnapShot Data: " + dataSnapshot.getValue());
+                    first_run = false;
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -316,14 +345,14 @@ public class MyBluetoothService extends Service  {
                             + e.getMessage();
 
                 }
-
-                Data obt = new Data();
+            Data obt = new Data();
                 obt.temp = temp;
                 obt.pulse= pulse;
 
 
                 time = new SimpleDateFormat("HH:mm:ss");
                 date = new SimpleDateFormat("dd/MM/yyyy");
+
                 d = new Date();
 
                     record_ref.child("count").setValue(count);

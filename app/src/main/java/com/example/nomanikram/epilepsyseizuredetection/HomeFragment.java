@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
 
             Log.w("TAG","HomeFragment\n"+"temp: "+temp+"\npulse: "+pulse);
 
-            txt_pulse.setText(pulse+"bmp");
+            txt_pulse.setText(pulse+"bpm");
             txt_temp.setText(temp+"˚C");
 
 

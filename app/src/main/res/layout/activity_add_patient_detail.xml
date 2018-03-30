@@ -30,6 +30,8 @@
 
         <!-- NAME -->
 
+
+
         <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -116,12 +118,15 @@
         android:id="@+id/textInputLayout_height"
         android:layout_below="@id/radiogroup_gender"
         >
-             <android.support.v7.widget.AppCompatEditText
+
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/txt_height"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Height"
-                 android:inputType="number"/>
+            android:inputType="number"
+
+            />
     </android.support.design.widget.TextInputLayout>
 
         <!-- WEIGHT-->
