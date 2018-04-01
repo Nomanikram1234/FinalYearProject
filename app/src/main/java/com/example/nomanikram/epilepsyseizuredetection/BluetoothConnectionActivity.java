@@ -28,11 +28,11 @@ import java.util.UUID;
 
 public class BluetoothConnectionActivity extends AppCompatActivity {
 
-    RecyclerView recycleview;
+    private RecyclerView recycleview;
 
     public  static  Context context_push;
 
-    ListView listViewPairedDevice;
+    private ListView listViewPairedDevice;
     static  BluetoothAdapter bluetoothAdapter;
 
     public static Object bluetoothdevice;
@@ -41,17 +41,17 @@ public class BluetoothConnectionActivity extends AppCompatActivity {
     private final String UUID_STRING_WELL_KNOWN_SPP =
             "00001101-0000-1000-8000-00805F9B34FB";
     private static final int REQUEST_ENABLE_BT = 1;
-    String textInfo;
+    private String textInfo;
 
-    ArrayList<BluetoothDevice> pairedDeviceArrayList;
-    ArrayAdapter<BluetoothDevice> pairedDeviceAdapter;
+    private ArrayList<BluetoothDevice> pairedDeviceArrayList;
+    private ArrayAdapter<BluetoothDevice> pairedDeviceAdapter;
 
-    String textStatus;
+    private String textStatus;
 
 
 
-    Intent intent;
-    BluetoothDevice device;
+    private Intent intent;
+    private BluetoothDevice device;
 
 
     @Override

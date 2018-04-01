@@ -37,53 +37,53 @@ import java.util.regex.Pattern;
  */
 public class ContactFragment extends Fragment {
 
-   static boolean number_found;
+    private static boolean number_found;
 
     // declaring variables for button
-    AppCompatButton btn_add_manually;
-    AppCompatButton btn_add_from_contacts;
+    private AppCompatButton btn_add_manually;
+    private AppCompatButton btn_add_from_contacts;
 
     // declaring variables for edit text
-    static AppCompatEditText txt_number;
-    static  AppCompatEditText txt_name;
+    private static AppCompatEditText txt_number;
+    private static  AppCompatEditText txt_name;
 
     // declaring the variables for alertDialog and its builder
-    AlertDialog alertDialog;
-    AlertDialog.Builder builder;
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder builder;
 
     // declaring the list for name,number,contact
-    static List<String> names,numbers;
-    static List<Contact> contacts;
+    private static List<String> names,numbers;
+    private static List<Contact> contacts;
 
     // Declaring cursor
-    Cursor phones;
+    private Cursor phones;
 
     // declaring the variable for recycle view
-    RecyclerView recycleview;
+    private RecyclerView recycleview;
 
     // declaring the variable for authentication state
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     //declaring variable for storing database reference
-    DatabaseReference database;
+    private DatabaseReference database;
 
     // database reference to user and contact
-    static DatabaseReference user_reference;
-    static DatabaseReference contact_ref;
+    private static DatabaseReference user_reference;
+    private static DatabaseReference contact_ref;
 
 
-    static ListView listView ;
+    private static ListView listView ;
 
     // declaring the variables that used as counter for number of contacts already available in the databse
-    static int no;
+    private static int no;
     private static String total_no;
 
-    static boolean first_run = false;
+    private static boolean first_run = false;
 
-    static boolean number_found_name;
+    private static boolean number_found_name;
 
     // declaring the object for contact
-    static Contact contact;
+    private static Contact contact;
 
     public ContactFragment() {
         // Required empty public constructor

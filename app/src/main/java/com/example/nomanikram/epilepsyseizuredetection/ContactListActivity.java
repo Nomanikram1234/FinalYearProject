@@ -28,13 +28,13 @@ import java.util.List;
 public class ContactListActivity extends AppCompatActivity {
 
     // Declaring list to store names and corresponding mobile number
-    static List<String> names,numbers;
+    private static List<String> names,numbers;
 
     // declaring the listview to display the list of contacts
-    ListView listView ;
+    private ListView listView ;
 
     // Declaring the cursor to go through the whole list of contacts
-    Cursor phones;
+    private Cursor phones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -54,8 +54,8 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     // declaring thevariable for database reference
-    FirebaseDatabase database;
-    DatabaseReference mRef;
+    private FirebaseDatabase database;
+    private DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

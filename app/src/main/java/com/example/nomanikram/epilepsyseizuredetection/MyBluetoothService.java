@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -39,27 +40,27 @@ import java.util.UUID;
 public class MyBluetoothService extends Service  {
 //    ListView listViewPairedDevice;
 //    BluetoothAdapter bluetoothAdapter;
-    Intent senddata;
+    private Intent senddata;
     private static final int REQUEST_ENABLE_BT = 1;
 //    String textInfo;
 
     private UUID myUUID;
     private final String UUID_STRING_WELL_KNOWN_SPP =
             "00001101-0000-1000-8000-00805F9B34FB";
-    String textStatus;
-    ThreadConnectBTdevice myThreadConnectBTdevice;
-    String textByteCnt,pulse;
-    ThreadConnected myThreadConnected;
+    private String textStatus;
+    private ThreadConnectBTdevice myThreadConnectBTdevice;
+    private String textByteCnt,pulse;
+    private ThreadConnected myThreadConnected;
 
-    String temp;
+    private String temp;
 
-    Date d;
+    private Date d;
 
-    static boolean first_run = true;
+    private static boolean first_run = true;
 
     // declare variable to store format for date and time
-    static SimpleDateFormat date;
-    static SimpleDateFormat time;
+    private static SimpleDateFormat date;
+    private static SimpleDateFormat time;
 
     // declare variable for firebase auth state and database ref
     private FirebaseAuth mAuth;
@@ -444,6 +445,48 @@ public class MyBluetoothService extends Service  {
         }
 
 
+
+    }
+
+    private void average_bpm(){
+//        Scanner input = new Scanner(System.in);
+
+        int age=24;
+        int weight, height;
+
+        double max;
+
+        System.out.println("Enter age:");
+//        age = input.nextInt();
+
+        // Max Heart rate
+        max = 211 - 0.64 * age;
+
+        // Training
+        int TMax = (int) (max - 6);
+        int TMin = (int) (max - 26);
+
+        // Normal
+        int NMax = (int) (max - 44);
+        int NMin = (int) (max - 64);
+
+        System.out.println("\nMax Heart Rate:" + max + "\n\n" + "[TRAINING]\nMax: " + TMax + " to Min: " + TMin + "\n");
+
+        System.out.println("[NORMAL]\nMax: " + NMax + " to Min: " + NMin);
+    }
+
+    private void sendSMS(String phoneNumber, String message)
+    {
+        try
+        {
+            SmsManager sms = SmsManager.getDefault();
+            sms.sendTextMessage(phoneNumber, null, message, null, null);
+            Toast.makeText(getApplicationContext(), "SMS snt", Toast.LENGTH_LONG).show();
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(getApplicationContext(), "NOT snt", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

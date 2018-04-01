@@ -24,19 +24,19 @@ import com.google.firebase.database.ValueEventListener;
 public class AddPatientDetailActivity extends AppCompatActivity {
 
     // Declaring the edit text fields
-    AppCompatEditText txt_name;
-    AppCompatEditText txt_age;
+    private AppCompatEditText txt_name;
+    private AppCompatEditText txt_age;
 //    AppCompatEditText txt_gender;
-    AppCompatEditText txt_height;
-    AppCompatEditText txt_weight;
+    private AppCompatEditText txt_height;
+    private AppCompatEditText txt_weight;
 
     // declaring the radiogroup
-    RadioGroup radioGroup;
+    private RadioGroup radioGroup;
 
     // declaring the radiobuttons
-    AppCompatRadioButton radioButton_male;
-    AppCompatRadioButton radioButton_female;
-    AppCompatRadioButton check_radioButton;
+    private AppCompatRadioButton radioButton_male;
+    private AppCompatRadioButton radioButton_female;
+    private AppCompatRadioButton check_radioButton;
 
 
     // declaring input layout for textfields
@@ -46,14 +46,14 @@ public class AddPatientDetailActivity extends AppCompatActivity {
     private TextInputLayout textInputLayout_height;
 
     // declaring the button
-    AppCompatButton btn_save;
+    private AppCompatButton btn_save;
 
     // declaring the variable for Firebase auth state and database reference
-    FirebaseAuth mAuth;
-    FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
 
     // declared variable for storing the uid of currently logged user
-    String userID;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

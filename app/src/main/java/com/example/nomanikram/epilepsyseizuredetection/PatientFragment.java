@@ -38,17 +38,17 @@ public class PatientFragment extends Fragment {
     private AppCompatTextView txt_weight;
 
     // Declaring the variable for floating button
-    FloatingActionButton btn_floating;
+    private FloatingActionButton btn_floating;
 
     // Delcaring the variable for firebase auth state and database reference
-    FirebaseAuth mAuth;
-    DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private DatabaseReference reference;
 
     // declaring the variable for uid of currently logged user
-    String userID;
+    private String userID;
 
     // declared the variable for progress diaglog
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     public PatientFragment() {
         // Required empty public constructor

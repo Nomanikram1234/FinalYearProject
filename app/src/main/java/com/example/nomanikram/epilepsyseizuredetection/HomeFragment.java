@@ -35,24 +35,24 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeFragment extends Fragment {
 
     // Declaring the variable for text view
-    AppCompatTextView txt_name;
-    AppCompatTextView txt_age;
-    AppCompatTextView txt_weight;
-    AppCompatTextView txt_height;
+    private AppCompatTextView txt_name;
+    private AppCompatTextView txt_age;
+    private AppCompatTextView txt_weight;
+    private AppCompatTextView txt_height;
 
     // declaring variable for textview, public for use in other class
     public static AppCompatTextView txt_pulse;
     public static AppCompatTextView txt_temp;
 
     // declared imageview for bluetooth
-    ImageView imageButton_connectivity;
+    private ImageView imageButton_connectivity;
 
     // declared the variables for Firebase auth state and reference
-    FirebaseAuth mAuth;
-    DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private DatabaseReference reference;
 
     // declared the variable to store the uid of current logged user
-    String userID;
+    private String userID;
 
     public HomeFragment() {
         // Required empty public constructor

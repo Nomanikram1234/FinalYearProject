@@ -46,14 +46,14 @@ public class LoginActivity extends AppCompatActivity {
     private View view_S;
 
     // Declaring variable for progress dialog
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     // Declaring snackbar
-    Snackbar snackbar;
+    private Snackbar snackbar;
 
     // Aleart Dialog
-    AlertDialog alertDialog;
-    AlertDialog.Builder builder;
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder builder;
 
     // Auth Listener to represent either user is authenticated or not
     private FirebaseAuth.AuthStateListener mAuthListener;

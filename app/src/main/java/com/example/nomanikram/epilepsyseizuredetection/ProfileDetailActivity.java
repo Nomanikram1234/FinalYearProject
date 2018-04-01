@@ -50,10 +50,10 @@ public class ProfileDetailActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     // declare variable for firebase database reference
-    FirebaseDatabase database;
-    DatabaseReference mRef;
+    private FirebaseDatabase database;
+    private DatabaseReference mRef;
 
-    User user;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
