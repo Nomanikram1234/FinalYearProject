@@ -108,7 +108,7 @@ public class PatientFragment extends Fragment {
             txt_height.setText(patient.getHeight()+" cm");
             txt_weight.setText(patient.getWeight()+" kg");
 
-            progressDialog.hide();
+            progressDialog.dismiss();
 
         }
 

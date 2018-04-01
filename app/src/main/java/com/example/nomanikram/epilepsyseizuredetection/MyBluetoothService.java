@@ -1,13 +1,17 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -81,21 +85,44 @@ public class MyBluetoothService extends Service  {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+
+            Intent notificationIntent = new Intent(this,MyBluetoothService.class);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                    notificationIntent, 0);
+
+            Notification notification = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_launcher_background)
+                    .setContentTitle("Sensor Monitoring")
+                    .setContentText("Doing some work...")
+                    .setOngoing(true)
+                    .setContentIntent(pendingIntent).build();
+            startForeground(1337, notification);
+        }
+    }
+
+    @Override
     public int onStartCommand(Intent tent, int flags, int id) {
+        try {
 
-        Bundle b = tent.getExtras();
-        BluetoothDevice device = b.getParcelable("data");
+            Bundle b = tent.getExtras();
+            BluetoothDevice device = b.getParcelable("data");
 
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance().getReference();
+            mAuth = FirebaseAuth.getInstance();
+            database = FirebaseDatabase.getInstance().getReference();
 
-        user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        record_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
+            user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+            record_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
 
-        query = record_ref.child("count");
+            query = record_ref.child("count");
 
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.w("","DS: "+dataSnapshot);
@@ -133,10 +160,14 @@ public class MyBluetoothService extends Service  {
         senddata.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(senddata);
+}catch (Exception ex){
 
+}
         return flags;
 
     }
+
+
 
     private class ThreadConnectBTdevice extends Thread {
 
@@ -158,6 +189,17 @@ public class MyBluetoothService extends Service  {
             }
         }
 
+        @Override
+        public void destroy() {
+            super.destroy();
+
+
+            if (myThreadConnectBTdevice != null) {
+                myThreadConnectBTdevice.cancel();
+//                stopSelf();
+
+            }
+        }
         @Override
         public void run() {
             boolean success = false;
@@ -351,8 +393,8 @@ public class MyBluetoothService extends Service  {
 
                 }
 
-                if(temp.equals("Arduino external interrupt 0"))
-                    temp= "--";
+//                if(temp.equals("Arduino external interrupt 0"))
+//                    temp= "--";
 
                 // data obtained from sensors is stored in the obt object
                 Data obt = new Data();
@@ -391,6 +433,16 @@ public class MyBluetoothService extends Service  {
                 e.printStackTrace();
             }
         }
+
+        public void cancel() {
+            try {
+                connectedBluetoothSocket.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
 
     }
 
