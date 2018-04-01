@@ -239,6 +239,7 @@ public class MyBluetoothService extends Service  {
 
             connectedInputStream = in;
             connectedOutputStream = out;
+
         }
 
         @Override
@@ -350,6 +351,9 @@ public class MyBluetoothService extends Service  {
 
                 }
 
+                if(temp.equals("Arduino external interrupt 0"))
+                    temp= "--";
+
                 // data obtained from sensors is stored in the obt object
                 Data obt = new Data();
                 obt.temp = temp;
@@ -363,13 +367,13 @@ public class MyBluetoothService extends Service  {
 
                 // storing the data to database
                     record_ref.child("count").setValue(count);
+                    count++;
                     record_ref.child("record "+count).child("pulse").setValue(""+obt.pulse);
                     record_ref.child("record "+count).child("temperture").setValue(""+obt.temp);
                     record_ref.child("record "+count).child("acceleromenter").setValue("N/A");
                     record_ref.child("record "+count).child("time").setValue(""+time.format(d));
                     record_ref.child("record "+count).child("date").setValue(""+date.format(d));
-                    count++;
-//
+
 
                 Log.w("TAG","MyBluetoothService\n"+"temp: "+temp+"\npulse: "+pulse);
                 // Broadcasting the data to Home class -> Sensor Receiver class

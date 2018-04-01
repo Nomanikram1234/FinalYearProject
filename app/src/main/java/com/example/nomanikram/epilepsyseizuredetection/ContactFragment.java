@@ -28,13 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ContactFragment extends Fragment {
+
+   static boolean number_found;
 
     // declaring variables for button
     AppCompatButton btn_add_manually;
@@ -76,6 +79,8 @@ public class ContactFragment extends Fragment {
     private static String total_no;
 
     static boolean first_run = false;
+
+    static boolean number_found_name;
 
     // declaring the object for contact
     static Contact contact;
@@ -157,59 +162,65 @@ public class ContactFragment extends Fragment {
                 txt_number = (AppCompatEditText) view_f.findViewById(R.id.txt_contact_no);
                 txt_name = (AppCompatEditText) view_f.findViewById(R.id.txt_contact_name);
 
+
+
                 alertDialog = builder.create();
                 alertDialog.show();
 
                 btn_add_contact_manually.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
+
+                       number_found_name = is_Number_found(txt_name.getText().toString());
+
                        // checks if the input fields of alert dialog are not empty
-                       if(!txt_number.getText().toString().isEmpty() || !txt_name.getText().toString().isEmpty()){
+                       if(!txt_number.getText().toString().isEmpty() && !txt_name.getText().toString().isEmpty()  ){
 
                 /* ************************************** */
-//
-//                          user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                          contact_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
 
-                           // store the inputs the object
-                           contact.contact_name = txt_name.getText().toString();
-                           contact.contact_no = txt_number.getText().toString();
+                           if(number_found_name == false) {
+                               Log.w("", "CHOICE: " + number_found_name);
 
-                           // query to read the data change at contact ref node in the database reference
-                           Query query = contact_ref;
+                               // store the inputs the object
+                               contact.contact_name = txt_name.getText().toString();
+                               contact.contact_no = txt_number.getText().toString();
+
+                               // query to read the data change at contact ref node in the database reference
+                               Query query = contact_ref;
 
                                query.addListenerForSingleValueEvent((new ValueEventListener() {
                                    @Override
                                    public void onDataChange(DataSnapshot dataSnapshot) {
 
                                        // checking either size node exists or not, if not the initialize the counter variables to 0
-                                       if (!dataSnapshot.child("Size").exists())
-                                       {
+                                       if (!dataSnapshot.child("Size").exists()) {
                                            no = 0;
-                                           total_no="0";
+                                           total_no = "0";
 
+//                                           if(!number_found_name) {
                                            // storing data in the database
                                            contact_ref.child("Size").setValue("" + total_no);
                                            contact_ref.child("contact " + total_no).child("Name").setValue("" + contact.contact_name);
                                            contact_ref.child("contact " + total_no).child("Number").setValue("" + contact.contact_no);
-
-                                         update_recycleview();                                    }
+//                                           }
+                                           update_recycleview();
+                                       }
 
                                        // otherwise read the current value of counter variable from database and initizaling those value to counter variable
-                                         else
-                                       {
-                                           Log.w("","total_no: "+total_no);
+                                       else {
+                                           Log.w("", "total_no: " + total_no);
                                            total_no = (String) dataSnapshot.child("Size").getValue();
                                            no = Integer.parseInt(total_no);
 
                                            no++;
-                                           total_no = ""+no;
+                                           total_no = "" + no;
 
+//                                           if(!number_found_name) {
                                            // storing data in the database
                                            contact_ref.child("Size").setValue("" + total_no);
                                            contact_ref.child("contact " + total_no).child("Name").setValue("" + contact.contact_name);
                                            contact_ref.child("contact " + total_no).child("Number").setValue("" + contact.contact_no);
-
+//                                            }
                                            update_recycleview();
 
                                        }
@@ -224,7 +235,7 @@ public class ContactFragment extends Fragment {
                                }));
 
                             /* ************************************** */
-
+                           }
                        }
 
 
@@ -309,5 +320,28 @@ public class ContactFragment extends Fragment {
             }
         });
     }
+
+    private boolean is_Number_found(String text){
+
+        String line = text;
+        String pattern = "(\\d+)";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+         number_found = false;
+
+        // Now create matcher object.
+        Matcher m = r.matcher(line);
+        if (m.find( )) {
+            number_found = true;
+
+        }else {
+            number_found =false;
+        }
+
+return  number_found;
+    }
+
 
 }
