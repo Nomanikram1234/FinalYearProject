@@ -30,19 +30,24 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class PatientFragment extends Fragment {
 
+    // Declaring the varaible for textviews
     private AppCompatTextView txt_name;
     private AppCompatTextView txt_age;
     private AppCompatTextView txt_gender;
     private AppCompatTextView txt_height;
     private AppCompatTextView txt_weight;
 
+    // Declaring the variable for floating button
     FloatingActionButton btn_floating;
 
+    // Delcaring the variable for firebase auth state and database reference
     FirebaseAuth mAuth;
     DatabaseReference reference;
 
+    // declaring the variable for uid of currently logged user
     String userID;
 
+    // declared the variable for progress diaglog
     ProgressDialog progressDialog;
 
     public PatientFragment() {
@@ -57,19 +62,24 @@ public class PatientFragment extends Fragment {
         // Inflate the layout for this fragment
     View view =  inflater.inflate(R.layout.fragment_patient, container, false);
 
+    // initialize the instances of firebase auth and database reference
     mAuth =FirebaseAuth.getInstance();
     reference = FirebaseDatabase.getInstance().getReference();
 
+    // initialing the variable with currently logged user uid
     userID = mAuth.getCurrentUser().getUid();
 
+    // initialing the textviews
     txt_name = (AppCompatTextView) view.findViewById(R.id.txt_entered_name);
     txt_age = (AppCompatTextView) view.findViewById(R.id.txt_entered_age);
     txt_gender = (AppCompatTextView) view.findViewById(R.id.txt_entered_gender);
     txt_height = (AppCompatTextView) view.findViewById(R.id.txt_entered_height);
     txt_weight = (AppCompatTextView) view.findViewById(R.id.txt_entered_weight);
 
+    // initialing the bloatinngbutton
     btn_floating = (FloatingActionButton) view.findViewById(R.id.btn_floating);
 
+    // query for patient node
     Query query1 = reference.child("users").child(userID).child("Patient");
 
         progressDialog = new ProgressDialog(getContext());
@@ -78,8 +88,9 @@ public class PatientFragment extends Fragment {
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
-    query1.addValueEventListener(new ValueEventListener() {
-        @Override
+        // check datachanges at patient node
+        query1.addValueEventListener(new ValueEventListener() {
+            @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
 
@@ -110,7 +121,7 @@ public class PatientFragment extends Fragment {
 
 
 
-
+    // start add patient detail activity
     btn_floating.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

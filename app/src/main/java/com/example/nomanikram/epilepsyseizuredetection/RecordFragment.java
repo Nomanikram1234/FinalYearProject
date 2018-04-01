@@ -30,16 +30,21 @@ import java.util.List;
  */
 public class RecordFragment extends Fragment {
 
+    // declaring the variable for firebase auth state and database reference
     private FirebaseAuth mAuth;
     private DatabaseReference database;
 
+    // declare the variable for firebase references
     private static DatabaseReference user_reference;
     private static DatabaseReference record_ref;
 
+    // declared query variable for database record node
     static Query query;
 
-   static List<Record> recorder;
+    // declared list for record
+    static List<Record> recorder;
 
+    // declared variable for recyleview
     RecyclerView recycleview;
 
     public RecordFragment() {
@@ -54,47 +59,51 @@ public class RecordFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record, container, false);
 
+        // initialing the variables and list
         recycleview = (RecyclerView) view.findViewById(R.id.recycler_record);
-         recorder = new ArrayList<Record>();
+        recorder = new ArrayList<Record>();
 
+        // Initialing the firebase auth state and database reference
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
 
+        // initialize the reference to record node and user node
         user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         record_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
 
+        // query to perform at record node
         query = record_ref;
 
 
-
-        Record r1 = new Record();
-        r1.heartbeat = "85";
-        r1.activity_status="mild";
-        r1.date="12/12/2018";
-        r1.temp="100";
-        r1.id="12:00";
-
-
-        Record r2 = new Record();
-        r2.heartbeat = "8";
-        r2.activity_status="serve";
-        r2.date="12/12/2018";
-        r2.temp="200";
-        r2.id="12:00";
-
-
-        Record r3 = new Record();
+//
+//        Record r1 = new Record();
+//        r1.heartbeat = "85";
+//        r1.activity_status="mild";
+//        r1.date="12/12/2018";
+//        r1.temp="100";
+//        r1.id="12:00";
+//
+//
+//        Record r2 = new Record();
+//        r2.heartbeat = "8";
+//        r2.activity_status="serve";
+//        r2.date="12/12/2018";
+//        r2.temp="200";
+//        r2.id="12:00";
 
 
-//        recorder.add(r1);
+//        Record r3 = new Record();
+//       recorder.add(r1);
 //        recorder.add(r2);
 //        recorder.add(r3);
 
-        Log.d("TAG","Size: "+ recorder.size());
+//        Log.d("TAG","Size: "+ recorder.size());
         LinearLayoutManager linear = new LinearLayoutManager(this.getContext());
         recycleview.setLayoutManager(linear);
 
         recycleview.setHasFixedSize(true);
+
+        // reading datachanges from database record node
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,7 +139,7 @@ public class RecordFragment extends Fragment {
 
 
 //        recycleview.setAdapter(new RecycleAdapter_record(recorder));
-        Log.d("TAG",r1+"\n"+r1);
+//        Log.d("TAG",r1+"\n"+r1);
 
         return view;
     }

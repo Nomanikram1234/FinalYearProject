@@ -27,36 +27,44 @@ import java.util.List;
 
 public class ContactListActivity extends AppCompatActivity {
 
+    // Declaring list to store names and corresponding mobile number
     static List<String> names,numbers;
+
+    // declaring the listview to display the list of contacts
     ListView listView ;
+
+    // Declaring the cursor to go through the whole list of contacts
     Cursor phones;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
 
-
-
+        // Initiazling the listview
         listView = (ListView) findViewById(R.id.listview_contacts);
 
+        // Initializing the arraylists
         names = new ArrayList<String>();
         numbers= new ArrayList<String>();
 
                 /* ********************* */
+        // cursor to move through the whole list of contacts and getting the display names
         phones = getApplication().getContentResolver().query
                 (ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                         null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
 
+        // variable declared to get name and phone numbers from the cursor -> phone
         String name,phoneNumber;
 
+        // phone the items in contact list exists
         while(phones.moveToNext()) {
+
+            // getting names and numbers stored from contacts
             name= phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             phoneNumber=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-
+            // getting the above fetched info stored in the arraylist
             names.add(""+name);
             numbers.add(""+phoneNumber);
 //                    Log.w("","Names: " +name+"\nPhone: "+phoneNumber);
@@ -64,6 +72,7 @@ public class ContactListActivity extends AppCompatActivity {
         }
 
         Log.w("","Names: " +names.get(0)+"\nPhone: "+numbers.get(0));
+
 
         ArrayAdapter adapter = new ArrayAdapter<String>(getApplicationContext(),android.
                 R.layout.simple_list_item_1,names);
@@ -73,10 +82,12 @@ public class ContactListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                // getting the storing the click contact in obj
                 Contact c = new Contact();
                 c.contact_name =  names.get(position);
                 c.contact_no  = numbers.get(position);
 
+                // sending the data in the form of obj and thus, start the sctivity
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.putExtra("MyObject",c);
                 startActivity(intent);

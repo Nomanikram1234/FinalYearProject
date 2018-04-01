@@ -34,18 +34,24 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class HomeFragment extends Fragment {
 
-
+    // Declaring the variable for text view
     AppCompatTextView txt_name;
     AppCompatTextView txt_age;
     AppCompatTextView txt_weight;
     AppCompatTextView txt_height;
+
+    // declaring variable for textview, public for use in other class
     public static AppCompatTextView txt_pulse;
     public static AppCompatTextView txt_temp;
 
+    // declared imageview for bluetooth
     ImageView imageButton_connectivity;
 
+    // declared the variables for Firebase auth state and reference
     FirebaseAuth mAuth;
     DatabaseReference reference;
+
+    // declared the variable to store the uid of current logged user
     String userID;
 
     public HomeFragment() {
@@ -59,6 +65,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
+        // initializing the textview
         txt_name = (AppCompatTextView) view.findViewById(R.id.txt_name);
         txt_age = (AppCompatTextView) view.findViewById(R.id.txt_age);
         txt_weight = (AppCompatTextView) view.findViewById(R.id.txt_weight);
@@ -66,21 +73,17 @@ public class HomeFragment extends Fragment {
         txt_pulse = (AppCompatTextView) view.findViewById(R.id.txt_pulserate);
         txt_temp = (AppCompatTextView) view.findViewById(R.id.txt_temperature);
 
-
+        // initializing the bluetooth imageview
         imageButton_connectivity  =(ImageView) view.findViewById(R.id.bluetoothConnection);
 
-
-
-//        txt_name = (AppCompatTextView) view.findViewById(R.id.txt_name);
-
+        // initializing the firebase auth state and get reference to database
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
 
+        // initializing the uid of currently logged user
         userID = mAuth.getCurrentUser().getUid();
 
-//        Toast.makeText(getActivity().getApplicationContext(),"SHOW: "+userID,Toast.LENGTH_SHORT).show();
-
-
+        // start bluetooth connection activity
         imageButton_connectivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,23 +92,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // query to read data changes in the database at patient node
         Query query1 = reference.child("users").child(userID).child("Patient");
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                    // Storing data to patient object
                     Patient patient = new Patient();
                     patient.setName(""+dataSnapshot.child("name").getValue());
                     patient.setAge(""+dataSnapshot.child("age").getValue());
                     patient.setWeight(""+dataSnapshot.child("weight").getValue());
                     patient.setHeight(""+dataSnapshot.child("height").getValue());
 
-                    Log.w("TAG", "Patient Name: " + patient.getName());
-                    Log.w("TAG", "Patient Age: " + patient.getAge());
-                    Log.w("TAG", "Patient Height: " + patient.getWeight());
-                    Log.w("TAG", "Patient Weight: " + patient.getHeight());
+//                    Log.w("TAG", "Patient Name: " + patient.getName());
+//                    Log.w("TAG", "Patient Age: " + patient.getAge());
+//                    Log.w("TAG", "Patient Height: " + patient.getWeight());
+//                    Log.w("TAG", "Patient Weight: " + patient.getHeight());
 
-
+                    // displaying patient data from obj to text views
                     txt_name.setText(patient.getName());
                     txt_age.setText(patient.getAge()+ " years old");
                     txt_height.setText(patient.getHeight() + "cm");
@@ -121,6 +126,8 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+    // Broadcast listener to receive data from bluetooth service class
     public static class SensorReceiver extends BroadcastReceiver {
 
         //        static Data data;

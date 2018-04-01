@@ -26,27 +26,34 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class InitialPatientDetailActivity extends AppCompatActivity {
 
+    // declaring the variables for edit texts
     private AppCompatEditText txt_name;
     private AppCompatEditText txt_age;
     private AppCompatEditText txt_weight;
     private AppCompatEditText txt_height;
 
+    // declaring the variable for layout of input fields
     private TextInputLayout textInputLayout_name;
     private TextInputLayout textInputLayout_age;
     private TextInputLayout textInputLayout_weight;
     private TextInputLayout textInputLayout_height;
 
+    // declaring the variables for radio group and checked radio
     private RadioGroup radioGroup;
     private RadioButton check_radiobutton;
 
+    // declaring variable for radiobutton
     private RadioButton radioButton_male;
     private RadioButton radioButton_female;
 
+    // declaring variable for save button
     private AppCompatButton btn_save;
 
+    // declaring the variable for auth state listener
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    // declaring thevariable for database reference
     FirebaseDatabase database;
     DatabaseReference mRef;
 
@@ -55,27 +62,33 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_patient_detail);
 
+        // Initialing the edit texts
         txt_name =(AppCompatEditText) findViewById(R.id.txt_name);
         txt_age = (AppCompatEditText) findViewById(R.id.txt_age);
         txt_weight = (AppCompatEditText) findViewById(R.id.txt__weight);
         txt_height =(AppCompatEditText) findViewById(R.id.txt_height);
 
+        // initializing the inputlayouts
         textInputLayout_name = (TextInputLayout) findViewById(R.id.textInputLayout_name);
         textInputLayout_age  = (TextInputLayout) findViewById(R.id.textInputLayout_age);
         textInputLayout_weight = (TextInputLayout) findViewById(R.id.textInputLayout_weight);
         textInputLayout_height = (TextInputLayout) findViewById(R.id.textInputLayout_height);
 
+        // initialing the radio groups and radio buttons
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup_gender);
         radioButton_male = (AppCompatRadioButton) findViewById(R.id.radio_male);
         radioButton_female = (AppCompatRadioButton) findViewById(R.id.radio_female);
 
+        // initializing the button
         btn_save = (AppCompatButton) findViewById(R.id.btn_save) ;
 
+        // initialize the Auth state object with instance of currently logged user
         mAuth = FirebaseAuth.getInstance();
 
 //        setupAuthStateListener();
 //        login();
 
+        // Initialing the reference to database
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference();
 
@@ -84,9 +97,11 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // Getting id of currently checked radiobutton and then providing it reference
                 int radioButton_id = radioGroup.getCheckedRadioButtonId();
                 check_radiobutton = findViewById(radioButton_id);
 
+                // checking either all fields are filled and radio buttion is checked or not
                 boolean is_fields_empty = txt_name.getText().toString().isEmpty()   ||
                                           txt_age.getText().toString().isEmpty()    ||
                                           txt_height.getText().toString().isEmpty() ||
@@ -114,6 +129,7 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 {
                     textInputLayout_age.setErrorEnabled(false);
 
+                    // checking the condion i.e age should be from 0 - 200
                     if( !( Integer.parseInt(txt_age.getText().toString()) >= 0 && Integer.parseInt(txt_age.getText().toString()) <= 200) ){
                         textInputLayout_age.setErrorEnabled(true);
                         textInputLayout_age.setError("Age is Invalid ");
@@ -136,7 +152,7 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 {
                     textInputLayout_height.setErrorEnabled(false);
 
-
+                    // checking the condion i.e height should be from 0 - 300
                     if( !( Integer.parseInt(txt_height.getText().toString()) >=0 && Integer.parseInt(txt_height.getText().toString()) <= 300))
                     {
                         textInputLayout_height.setErrorEnabled(true);
@@ -159,7 +175,7 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 else
                 {
                     textInputLayout_weight.setErrorEnabled(false);
-
+                    // checking the condion i.e age should be from 0 - 600
                     if( !( Integer.parseInt(txt_weight.getText().toString()) >= 0 && Integer.parseInt(txt_weight.getText().toString()) <= 600 )){
                         textInputLayout_weight.setErrorEnabled(true);
                         textInputLayout_weight.setError("Weight is Invalid. Max weight = 600");
@@ -175,7 +191,7 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 if(check_radiobutton != radioButton_male && check_radiobutton != radioButton_female)
                     Toast.makeText(getApplicationContext(),"Gender not Selected",Toast.LENGTH_SHORT).show();
 
-                // Check if all fields are filled
+                // Check if all fields are filled and all conditions for age,height,weight are satisifed too
                 if(!is_fields_empty &&
                         ( Integer.parseInt(txt_weight.getText().toString()) >= 0 && Integer.parseInt(txt_weight.getText().toString()) <= 600 ) &&
                         ( Integer.parseInt(txt_height.getText().toString()) >=0 && Integer.parseInt(txt_height.getText().toString()) <= 300) )
@@ -183,7 +199,7 @@ public class InitialPatientDetailActivity extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(), "Not Empty", Toast.LENGTH_SHORT).show();
 
-                    /* Write Working Code Here */
+                    /* Storing the Data to database */
 
                     Patient patient =  new Patient();
 

@@ -27,22 +27,29 @@ import com.google.firebase.auth.ProviderQueryResult;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    // declaring variables for edit text
     private  AppCompatEditText email;
     private  AppCompatEditText password;
     private  AppCompatEditText confirm_password;
 
+    // declaring variables for input layouts
     private TextInputLayout textInputLayout_email;
     private TextInputLayout textInputLayout_password;
     private TextInputLayout textInputLayout_confirm_password;
 
+    // declaring variable for button
     private  Button btn_register;
 
+    // declaring variable for relative layout
     private  RelativeLayout relativeLayout;
 
+    // declaring variable for view
     private View view;
 
+    // declaring variable for auth state
     private FirebaseAuth mAuth;
 
+    // delcaring variable for progress dialog
     ProgressDialog progressDialog;
 
     @Override
@@ -50,23 +57,29 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Iniializing the edit text fields
         email = (AppCompatEditText) findViewById(R.id.txt_email);
         password = (AppCompatEditText) findViewById(R.id.txt_password);
         confirm_password = (AppCompatEditText) findViewById(R.id.txt_confirm_password);
 
+        // Initializing the input layout fields
         textInputLayout_email = (TextInputLayout) findViewById(R.id.textInputLayout_email);
         textInputLayout_password = (TextInputLayout) findViewById(R.id.textInputLayout_password);
         textInputLayout_confirm_password = (TextInputLayout) findViewById(R.id.textInputLayout_confirm_password);
 
+        // Initializing the buttons
         btn_register = (Button) findViewById(R.id.btn_registration);
 
+        // Initializing the layout
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        // To remove the cursor from input fields
         relativeLayout.setOnClickListener(null);
 
+        // Initialized the view
         view = (View) findViewById(R.id.relativeLayout);
 
         mAuth = FirebaseAuth.getInstance();
-        Task<ProviderQueryResult> check;
+//        Task<ProviderQueryResult> check;
 
 
 
@@ -74,13 +87,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-
+            /*  boolean variables initialized to check the following conditions ...
+            *   if both passwords fields have same password entered
+            *   if password length is equal or greater than 8
+            *   if email , password , confirm password field is empty
+            * */
             boolean password_match = password.getText().toString().matches(confirm_password.getText().toString());
             boolean password_length= password.getText().toString().length() >= 8;
             boolean empty_fields = (email.getText().toString().isEmpty()|| password.getText().toString().isEmpty() || confirm_password.getText().toString().isEmpty());
-
-
-
 
             // check if the fields are empty
 
@@ -112,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                 else
                     textInputLayout_confirm_password.setErrorEnabled(false);
 
+                // checks if email , password , confirm password field is empty
             if(!empty_fields)
             {
                 // disable all error msgs enabled
@@ -119,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                 textInputLayout_password.setErrorEnabled(false);
                 textInputLayout_confirm_password.setErrorEnabled(false);
 
+                // checks if email pattern is not correct i.e either its containing '@' or '.com'
                 if( !email.getText().toString().contains("@") || !email.getText().toString().contains(".com"))
                 {
                     //  check email pattern is valid or not
@@ -164,6 +180,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void register_user(String email,String password) {
+
+        // Firebase method to create new user with email and password
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -173,11 +191,11 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Snackbar snackbar = Snackbar.make(view, "Not Registered", Snackbar.LENGTH_SHORT);
 
+                    // initializing th snackbar for not registered user
+                    Snackbar snackbar = Snackbar.make(view, "Not Registered", Snackbar.LENGTH_SHORT);
                     View v = snackbar.getView();
                     v.setBackgroundColor(getResources().getColor(R.color.colorSnackbarBackgroundFailure));
-
                     TextView txt = (TextView) v.findViewById(android.support.design.R.id.snackbar_text);
                     txt.setTextColor(getResources().getColor(R.color.colorSnackbarText));
 

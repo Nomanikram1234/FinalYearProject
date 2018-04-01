@@ -27,23 +27,29 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileDetailActivity extends AppCompatActivity {
 
+    // declaring the variables for button
     private AppCompatButton btn_done;
 
+    // declaring the variables for radio button and radiogroup
     private RadioGroup radioGroup;
     private AppCompatRadioButton check_radio_button;
 
+    // declaring the variables for edittext
     private AppCompatEditText txt_name;
     private AppCompatEditText txt_age;
     private AppCompatEditText txt_gender;
     private AppCompatEditText txt_contactno;
 
+    // declaring the variables for inputlayout
     private TextInputLayout textInputLayout_name;
     private TextInputLayout textInputLayout_age;
     private TextInputLayout textInputLayout_contactno;
 
+    // declare the variable for firebase auth state
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    // declare variable for firebase database reference
     FirebaseDatabase database;
     DatabaseReference mRef;
 
@@ -54,44 +60,49 @@ public class ProfileDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_detail);
 
+        // initialing the ref to button
         btn_done = (AppCompatButton) findViewById(R.id.btn_done);
 
+        // initialing the ref to edit texts
         txt_name = (AppCompatEditText) findViewById(R.id.txt_name);
         txt_age  = (AppCompatEditText) findViewById(R.id.txt_age);
     //  txt_gender = (AppCompatEditText) findViewById(R.id.txt_gender);
         txt_contactno =(AppCompatEditText) findViewById(R.id.txt_contactno);
 
+        // initialing the ref to inputlayout
         textInputLayout_name = (TextInputLayout) findViewById(R.id.textInputLayout_name);
         textInputLayout_age = (TextInputLayout) findViewById(R.id.textInputLayout_age);
         textInputLayout_contactno = (TextInputLayout) findViewById(R.id.textInputLayout_contactno);
 
+        // initialing the ref to radio group
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup_gender);
 
-
+        // initializing instance of firebase auth
         mAuth = FirebaseAuth.getInstance();
 
-
-
+        // initializing the reference
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference();
-
 
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                // getting id of currently checked button
                 int radioButton_id = radioGroup.getCheckedRadioButtonId();
 
+                // if check then assign ref
                  if (R.id.radio_male == radioButton_id) {
                      check_radio_button= findViewById(R.id.radio_male);
-                     Log.w("TAG", "Male:");
+//                     Log.w("TAG", "Male:");
                  }
                  if (R.id.radio_female == radioButton_id){
                      check_radio_button= findViewById(R.id.radio_female);
-                     Log.w("TAG", "FEMale:");
+//                     Log.w("TAG", "FEMale:");
                  }
                    //  Log.w("TAG", "FEMale:");
 
+                // check if all fields are filled and radio buttion is selected
                 boolean is_textfield_empty = txt_name.getText().toString().isEmpty() ||
                         txt_age.getText().toString().isEmpty() ||
                         txt_contactno.getText().toString().isEmpty() ||
@@ -112,6 +123,8 @@ public class ProfileDetailActivity extends AppCompatActivity {
 
 
                 int age=0;
+
+                // check if age field is not empty then parse to int
                 if(!txt_age.getText().toString().isEmpty())
                 age =Integer.parseInt(txt_age.getText().toString());
 
@@ -171,16 +184,14 @@ public class ProfileDetailActivity extends AppCompatActivity {
 
 
 
-
+                // if radio button is not selected
                 if(! (radioButton_id == R.id.radio_male || radioButton_id == R.id.radio_female))
                     Toast.makeText(getApplicationContext(),"Gender not Selected",Toast.LENGTH_SHORT).show();
 
-
-                Log.w("","Reached here");
+                // if fields are not empty
                 if (!is_textfield_empty  ) {
-                    Log.w("","Reached here2");
+                    // if age is between 1 - 150
                     if(age >= 0 && age <=150) {
-                        Log.w("","Reached here3");
                         User user = new User();
                         user.setUser_name(txt_name.getText().toString());
                         user.setUser_age(txt_age.getText().toString());

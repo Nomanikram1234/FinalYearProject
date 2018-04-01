@@ -53,17 +53,21 @@ public class MyBluetoothService extends Service  {
 
     static boolean first_run = true;
 
-   static SimpleDateFormat date;
-   static SimpleDateFormat time;
+    // declare variable to store format for date and time
+    static SimpleDateFormat date;
+    static SimpleDateFormat time;
 
+    // declare variable for firebase auth state and database ref
     private FirebaseAuth mAuth;
     private DatabaseReference database;
 
     private static DatabaseReference user_reference;
     private static DatabaseReference record_ref;
 
+    // declare counter variable
     static int count;
 
+    // decalre variable for query
     static Query query;
 
     public MyBluetoothService() {
@@ -345,16 +349,19 @@ public class MyBluetoothService extends Service  {
                             + e.getMessage();
 
                 }
-            Data obt = new Data();
+
+                // data obtained from sensors is stored in the obt object
+                Data obt = new Data();
                 obt.temp = temp;
                 obt.pulse= pulse;
 
-
+                // setting he format
                 time = new SimpleDateFormat("HH:mm:ss");
                 date = new SimpleDateFormat("dd/MM/yyyy");
 
                 d = new Date();
 
+                // storing the data to database
                     record_ref.child("count").setValue(count);
                     record_ref.child("record "+count).child("pulse").setValue(""+obt.pulse);
                     record_ref.child("record "+count).child("temperture").setValue(""+obt.temp);
@@ -365,7 +372,7 @@ public class MyBluetoothService extends Service  {
 //
 
                 Log.w("TAG","MyBluetoothService\n"+"temp: "+temp+"\npulse: "+pulse);
-
+                // Broadcasting the data to Home class -> Sensor Receiver class
                 Intent inteni = new Intent(getApplicationContext(),HomeFragment.SensorReceiver.class);
                 inteni.putExtra("MyObject",obt);
                 sendBroadcast(inteni);

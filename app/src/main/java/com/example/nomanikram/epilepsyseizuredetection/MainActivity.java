@@ -3,18 +3,14 @@ package com.example.nomanikram.epilepsyseizuredetection;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nomanikram.epilepsyseizuredetection.models.Contact;
@@ -29,24 +25,29 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
+    //  declarign the bottom view variable
     private BottomNavigationView bottom;
 
+    // declaring the variable for firebase auth state and database ref
     private FirebaseAuth mAuth;
     private DatabaseReference database;
 
+    // declare variable for counter purpise
     private static int no;
-
     private static String total_no;
 
-    private static Contact c3;
+    // declaring variable for contact
+    private static Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // initialing the bottom nav
         bottom = (BottomNavigationView) findViewById(R.id.bottom);
 
+        // initializing with firebase auth state and database red
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
 
@@ -55,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment fragment = new HomeFragment();
         setFragment(fragment);
 
+//
+//        mAuth = FirebaseAuth.getInstance();
+//        database = FirebaseDatabase.getInstance().getReference();
 
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance().getReference();
-
+        // saving new contacts to firebase database
         update_contacts();
 
+        // query to get changes at node
         Query query1 = database.child("users").equalTo(mAuth.getCurrentUser().getUid());
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // Botton nav and fragment setters
         bottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -141,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void update_contacts() {
 
-       c3 = (Contact) getIntent().getSerializableExtra("MyObject");
+       contact = (Contact) getIntent().getSerializableExtra("MyObject");
 
-        if (c3 != null) {
+        if (contact != null) {
 
             DatabaseReference user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -163,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
                             total_no="0";
 
                             contact_ref.child("Size").setValue("" + total_no);
-                            contact_ref.child("contact " + total_no).child("Name").setValue("" + c3.contact_name);
-                            contact_ref.child("contact " + total_no).child("Number").setValue("" + c3.contact_no);
+                            contact_ref.child("contact " + total_no).child("Name").setValue("" + contact.contact_name);
+                            contact_ref.child("contact " + total_no).child("Number").setValue("" + contact.contact_no);
                         }
                         else
                         {
@@ -176,8 +179,8 @@ public class MainActivity extends AppCompatActivity {
                             total_no = ""+no;
 
                             contact_ref.child("Size").setValue("" + total_no);
-                            contact_ref.child("contact " + total_no).child("Name").setValue("" + c3.contact_name);
-                            contact_ref.child("contact " + total_no).child("Number").setValue("" + c3.contact_no);
+                            contact_ref.child("contact " + total_no).child("Name").setValue("" + contact.contact_name);
+                            contact_ref.child("contact " + total_no).child("Number").setValue("" + contact.contact_no);
 
                         }
 

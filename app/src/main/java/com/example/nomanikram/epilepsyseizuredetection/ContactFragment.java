@@ -4,7 +4,6 @@ package com.example.nomanikram.epilepsyseizuredetection;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
@@ -15,9 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.nomanikram.epilepsyseizuredetection.models.Contact;
 import com.example.nomanikram.epilepsyseizuredetection.views.RecycleAdapter_contact;
@@ -39,35 +36,49 @@ import java.util.List;
  */
 public class ContactFragment extends Fragment {
 
+    // declaring variables for button
     AppCompatButton btn_add_manually;
     AppCompatButton btn_add_from_contacts;
+
+    // declaring variables for edit text
     static AppCompatEditText txt_number;
     static  AppCompatEditText txt_name;
 
+    // declaring the variables for alertDialog and its builder
     AlertDialog alertDialog;
     AlertDialog.Builder builder;
 
+    // declaring the list for name,number,contact
     static List<String> names,numbers;
     static List<Contact> contacts;
 
+    // Declaring cursor
     Cursor phones;
 
+    // declaring the variable for recycle view
     RecyclerView recycleview;
 
+    // declaring the variable for authentication state
     FirebaseAuth mAuth;
+
+    //declaring variable for storing database reference
     DatabaseReference database;
 
+    // database reference to user and contact
     static DatabaseReference user_reference;
     static DatabaseReference contact_ref;
 
+
     static ListView listView ;
 
+    // declaring the variables that used as counter for number of contacts already available in the databse
     static int no;
     private static String total_no;
 
     static boolean first_run = false;
 
-    static Contact c3;
+    // declaring the object for contact
+    static Contact contact;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -80,32 +91,38 @@ public class ContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragment_view=  inflater.inflate(R.layout.fragment_contact, container, false);
 
+        // Initizaling the buttons
         btn_add_manually = (AppCompatButton) fragment_view.findViewById(R.id.btn_add_manually);
         btn_add_from_contacts = (AppCompatButton) fragment_view.findViewById(R.id.btn_add_from_contacts);
 
+        // Initializing the recycleview
         recycleview = (RecyclerView) fragment_view.findViewById(R.id.recycler_contact);
 
+        // Initializing the auth state and data
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
 
+        // initizaling the arraylist for name,number and contact
         names  = new ArrayList<String>();
         numbers = new ArrayList<String>();
         contacts = new ArrayList<Contact>();
 
+        // initialization users list
         List<Contact> users = new ArrayList<Contact>();
 
+        // initializing the database references
         user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         contact_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
 
-
-        Contact c1 = new Contact();
-        c1.contact_name = "Noman Ikram";
-        c1.contact_no = "03485007570XXX";
-
-        Contact c2 = new Contact();
-        c2.contact_name = "Raja Waqas";
-        c2.contact_no = "0044121771069";
-
+//
+//        Contact c1 = new Contact();
+//        c1.contact_name = "Noman Ikram";
+//        c1.contact_no = "03485007570XXX";
+//
+//        Contact c2 = new Contact();
+//        c2.contact_name = "Raja Waqas";
+//        c2.contact_no = "0044121771069";
+//
 
 //        Toast.makeText(getActivity().getApplicationContext(),"contacts size: "+contacts.size(),Toast.LENGTH_SHORT);
 //        for(int i=0 ; i< contacts.size() ; i++) {
@@ -123,27 +140,30 @@ public class ContactFragment extends Fragment {
 
         recycleview.setHasFixedSize(true);
 //        recycleview.setAdapter(new RecycleAdapter_contact(users));
-        Log.d("TAG",c1+"\n"+c1);
+//        Log.d("TAG",c1+"\n"+c1);
 
 
         btn_add_manually.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // building alert dialog for getting contact info
                 builder = new AlertDialog.Builder(getActivity());
                 View view_f = getLayoutInflater().inflate(R.layout.layout_add_contact_manually, null);
                 builder.setView(view_f);
 
                 AppCompatButton btn_add_contact_manually = (AppCompatButton) view_f.findViewById(R.id.btn_add_contact);
-                   c3 = new Contact();
-                  txt_number = (AppCompatEditText) view_f.findViewById(R.id.txt_contact_no);
-                 txt_name = (AppCompatEditText) view_f.findViewById(R.id.txt_contact_name);
+                contact = new Contact();
+                txt_number = (AppCompatEditText) view_f.findViewById(R.id.txt_contact_no);
+                txt_name = (AppCompatEditText) view_f.findViewById(R.id.txt_contact_name);
 
                 alertDialog = builder.create();
                 alertDialog.show();
 
-               btn_add_contact_manually.setOnClickListener(new View.OnClickListener() {
+                btn_add_contact_manually.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
+                       // checks if the input fields of alert dialog are not empty
                        if(!txt_number.getText().toString().isEmpty() || !txt_name.getText().toString().isEmpty()){
 
                 /* ************************************** */
@@ -151,29 +171,32 @@ public class ContactFragment extends Fragment {
 //                          user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 //                          contact_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
 
-                           c3.contact_name = txt_name.getText().toString();
-                           c3.contact_no = txt_number.getText().toString();
+                           // store the inputs the object
+                           contact.contact_name = txt_name.getText().toString();
+                           contact.contact_no = txt_number.getText().toString();
 
+                           // query to read the data change at contact ref node in the database reference
                            Query query = contact_ref;
-
-//                           boolean first_run = false;
-
 
                                query.addListenerForSingleValueEvent((new ValueEventListener() {
                                    @Override
                                    public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                       // checking either size node exists or not, if not the initialize the counter variables to 0
                                        if (!dataSnapshot.child("Size").exists())
                                        {
                                            no = 0;
                                            total_no="0";
 
+                                           // storing data in the database
                                            contact_ref.child("Size").setValue("" + total_no);
-                                           contact_ref.child("contact " + total_no).child("Name").setValue("" + c3.contact_name);
-                                           contact_ref.child("contact " + total_no).child("Number").setValue("" + c3.contact_no);
+                                           contact_ref.child("contact " + total_no).child("Name").setValue("" + contact.contact_name);
+                                           contact_ref.child("contact " + total_no).child("Number").setValue("" + contact.contact_no);
 
                                          update_recycleview();                                    }
-                                       else
+
+                                       // otherwise read the current value of counter variable from database and initizaling those value to counter variable
+                                         else
                                        {
                                            Log.w("","total_no: "+total_no);
                                            total_no = (String) dataSnapshot.child("Size").getValue();
@@ -182,9 +205,10 @@ public class ContactFragment extends Fragment {
                                            no++;
                                            total_no = ""+no;
 
+                                           // storing data in the database
                                            contact_ref.child("Size").setValue("" + total_no);
-                                           contact_ref.child("contact " + total_no).child("Name").setValue("" + c3.contact_name);
-                                           contact_ref.child("contact " + total_no).child("Number").setValue("" + c3.contact_no);
+                                           contact_ref.child("contact " + total_no).child("Name").setValue("" + contact.contact_name);
+                                           contact_ref.child("contact " + total_no).child("Number").setValue("" + contact.contact_no);
 
                                            update_recycleview();
 
@@ -199,9 +223,7 @@ public class ContactFragment extends Fragment {
                                    }
                                }));
 
-
-
-                /* ************************************** */
+                            /* ************************************** */
 
                        }
 
@@ -214,16 +236,13 @@ public class ContactFragment extends Fragment {
         btn_add_from_contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), ContactListActivity.class);
                 startActivity(intent);
 
 
             }
         });
-//
-//        user_reference = database.child("users").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        contact_ref = database.child("users").child("" + mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
+
 
         Query query = contact_ref;
         query.addListenerForSingleValueEvent(new ValueEventListener() {
