@@ -7,6 +7,8 @@
     android:background="#EEEEEE"
     android:id="@+id/fr">
 
+
+
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_patient"
@@ -194,9 +196,9 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/btn_floating"
         android:layout_below="@id/cardview_profile_detail"
         android:layout_alignParentRight="true"
@@ -206,7 +208,8 @@
 
         android:text="Modify Detail"
         android:layout_marginLeft="32dp"
-        android:layout_marginBottom="2dp"
+        android:textSize="14sp"
+
 
         android:src="@drawable/create_white"
 

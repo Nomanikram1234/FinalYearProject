@@ -51,7 +51,7 @@
 
 <android.support.v7.widget.AppCompatButton
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="35dp"
 
     android:layout_marginTop="16dp"
     android:layout_marginLeft="16dp"
@@ -63,12 +63,12 @@
 
     android:layout_centerHorizontal="true"
     android:text="Add Manually"
-    style="@style/RaisedButton"/>
+    style="@style/FlatButton"/>
 
     <android.support.v7.widget.AppCompatButton
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
 
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -79,6 +79,6 @@
         android:layout_centerHorizontal="true"
 
         android:text="Add from Contacts"
-        style="@style/RaisedButton"
+        style="@style/FlatButton"
         />
 </LinearLayout>

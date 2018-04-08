@@ -1,12 +1,14 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -47,6 +49,9 @@ public class RecordFragment extends Fragment {
     // declared variable for recyleview
     RecyclerView recycleview;
 
+   public static Context context_Record;
+   public static LayoutInflater layoutInflater;
+
     public RecordFragment() {
         // Required empty public constructor
     }
@@ -58,6 +63,9 @@ public class RecordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record, container, false);
+
+//        context_Record = getActivity().getApplicationContext();
+//        layoutInflater = getLayoutInflater();
 
         // initialing the variables and list
         recycleview = (RecyclerView) view.findViewById(R.id.recycler_record);
@@ -103,6 +111,8 @@ public class RecordFragment extends Fragment {
 
         recycleview.setHasFixedSize(true);
 
+
+
         // reading datachanges from database record node
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -128,7 +138,7 @@ public class RecordFragment extends Fragment {
                     recorder.add(R);
 
                 }
-                recycleview.setAdapter(new RecycleAdapter_record(recorder));
+                recycleview.setAdapter(new RecycleAdapter_record(recorder,getContext()));
             }
 
             @Override
@@ -136,10 +146,6 @@ public class RecordFragment extends Fragment {
 
             }
         });
-
-
-//        recycleview.setAdapter(new RecycleAdapter_record(recorder));
-//        Log.d("TAG",r1+"\n"+r1);
 
         return view;
     }

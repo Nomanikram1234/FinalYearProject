@@ -151,11 +151,11 @@ public class MyBluetoothService extends Service  {
         Log.w("","Service started: "+device);
 
 
-        myUUID = UUID.fromString(UUID_STRING_WELL_KNOWN_SPP);
-        myThreadConnectBTdevice = new MyBluetoothService.ThreadConnectBTdevice(device);
-        //goes to class ThreadConnectBTdevice and runs its threads start method to connect device and start data sending
-        myThreadConnectBTdevice.start();
-        senddata=new Intent(getApplicationContext(),MainActivity.class);
+            myUUID = UUID.fromString(UUID_STRING_WELL_KNOWN_SPP);
+            myThreadConnectBTdevice = new MyBluetoothService.ThreadConnectBTdevice(device);
+            //goes to class ThreadConnectBTdevice and runs its threads start method to connect device and start data sending
+            myThreadConnectBTdevice.start();
+            senddata=new Intent(getApplicationContext(),MainActivity.class);
 
 
         senddata.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -420,9 +420,9 @@ public class MyBluetoothService extends Service  {
 
                 Log.w("TAG","MyBluetoothService\n"+"temp: "+temp+"\npulse: "+pulse);
                 // Broadcasting the data to Home class -> Sensor Receiver class
-                Intent inteni = new Intent(getApplicationContext(),HomeFragment.SensorReceiver.class);
-                inteni.putExtra("MyObject",obt);
-                sendBroadcast(inteni);
+                Intent intent = new Intent(getApplicationContext(),HomeFragment.SensorReceiver.class);
+                intent.putExtra("MyObject",obt);
+                sendBroadcast(intent);
 
             }
         }

@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,26 +18,48 @@
         app:titleTextColor="@color/colorRaisedButtonText">
 
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:textColor="@color/colorRaisedButtonText"
-            android:layout_marginStart="0dp"
-            android:gravity="center_horizontal"
-            android:padding="0dp"
-            android:text="Setting"
-            android:visibility="gone"
-
-            />
 
     </android.support.v7.widget.Toolbar>
 
-
-
-    <TextView
-        android:layout_marginTop="100dp"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_modify_patient_detail"
+        style="@style/FlatButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
-</FrameLayout>
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Modify Patient Detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+    <Button
+        android:id="@+id/btn_set_patient_image"
+        style="@style/FlatButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="set patient image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_modify_patient_detail" />
+
+    <Button
+        android:id="@+id/btn_signout"
+        style="@style/FlatButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Sign out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_set_patient_image"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

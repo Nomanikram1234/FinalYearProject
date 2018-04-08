@@ -2,6 +2,7 @@ package com.example.nomanikram.epilepsyseizuredetection.views;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.nomanikram.epilepsyseizuredetection.R;
@@ -17,6 +18,7 @@ public class view_holder_record extends RecyclerView.ViewHolder{
     TextView activity_status;
     TextView date;
     TextView time;
+    LinearLayout linearLayout;
 
     public view_holder_record(View itemView) {
         super(itemView);
@@ -28,6 +30,6 @@ public class view_holder_record extends RecyclerView.ViewHolder{
         date = (TextView) itemView.findViewById(R.id.txt_date);
         time = (TextView) itemView.findViewById(R.id.txt_time);
 
-
+        linearLayout = (LinearLayout) itemView.findViewById(R.id.recycler_item_record);
     }
 }

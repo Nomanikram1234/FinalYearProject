@@ -1,5 +1,7 @@
 package com.example.nomanikram.epilepsyseizuredetection;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,6 +25,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -63,32 +72,39 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
+
+
 //      Intent intent = new Intent(getApplicationContext(),MainActivity.class);
 //      startActivity(intent);
 //      finish();
 
         // For Demo Login Purpose
-        login("jani@gmail.com","Nomi1234");
+//        login("jani@gmail.com","Nomi1234");
+
+
 
 
         // Initializing the variables
-        username = (AppCompatEditText) findViewById(R.id.txt_username);
-        password = (AppCompatEditText) findViewById(R.id.txt_password);
+        username = findViewById(R.id.txt_username);
+        password = findViewById(R.id.txt_password);
 
-        usernameLayout = (TextInputLayout) findViewById(R.id.username_textInputLayout);
-        passwordLayout = (TextInputLayout) findViewById(R.id.password_textInputLayout);
+        usernameLayout =  findViewById(R.id.username_textInputLayout);
+        passwordLayout =  findViewById(R.id.password_textInputLayout);
 
-        btn_login = (AppCompatButton) findViewById(R.id.btn_login);
-        btn_signup = (AppCompatButton) findViewById(R.id.btn_signup);
-        btn_help_login = (AppCompatButton) findViewById(R.id.btn_help_Login);
+        btn_login = findViewById(R.id.btn_login);
+        btn_signup =  findViewById(R.id.btn_signup);
+        btn_help_login = findViewById(R.id.btn_help_Login);
 
-        relative = (RelativeLayout) findViewById(R.id.relativeLayout);
+        relative =  findViewById(R.id.relativeLayout);
 
         // View variable initialized for snackbar
-        view_S = (View) findViewById(R.id.relativeLayout);
+        view_S = findViewById(R.id.relativeLayout);
 
 
         setupAuthStateListener();
+
 
         // Set Listener to login button
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -276,6 +292,9 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
+
+                    // In order to avoid window leakage
+                    progressDialog.dismiss();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -301,6 +320,9 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
     }
 

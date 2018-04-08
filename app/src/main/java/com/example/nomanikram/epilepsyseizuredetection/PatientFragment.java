@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.LogWriter;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class PatientFragment extends Fragment {
     private AppCompatTextView txt_weight;
 
     // Declaring the variable for floating button
-    private FloatingActionButton btn_floating;
+    private AppCompatButton btn_floating;
 
     // Delcaring the variable for firebase auth state and database reference
     private FirebaseAuth mAuth;
@@ -77,7 +78,7 @@ public class PatientFragment extends Fragment {
     txt_weight = (AppCompatTextView) view.findViewById(R.id.txt_entered_weight);
 
     // initialing the bloatinngbutton
-    btn_floating = (FloatingActionButton) view.findViewById(R.id.btn_floating);
+    btn_floating = (AppCompatButton) view.findViewById(R.id.btn_floating);
 
     // query for patient node
     Query query1 = reference.child("users").child(userID).child("Patient");

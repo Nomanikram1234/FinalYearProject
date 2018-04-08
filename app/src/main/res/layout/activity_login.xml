@@ -145,6 +145,7 @@ android:id="@+id/txt_forgottenDetails"
        android:padding="0dp"
 
        android:text="Epilepsy Seizure Detection"
+
        android:textColor="#FFFFFF"
        android:textSize="28sp"
        android:typeface="serif"

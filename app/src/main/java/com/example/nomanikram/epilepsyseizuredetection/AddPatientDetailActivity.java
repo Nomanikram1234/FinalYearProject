@@ -61,27 +61,27 @@ public class AddPatientDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_patient_detail);
 
         // initializing the edit texts
-        txt_name = (AppCompatEditText) findViewById(R.id.txt_name);
-        txt_age = (AppCompatEditText) findViewById(R.id.txt_age);
+        txt_name = findViewById(R.id.txt_name);
+        txt_age =  findViewById(R.id.txt_age);
 //        txt_gender = (AppCompatEditText) findViewById(R.id.txt_gender);
-        txt_height = (AppCompatEditText) findViewById(R.id.txt_height);
-        txt_weight = (AppCompatEditText) findViewById(R.id.txt_weight);
+        txt_height = findViewById(R.id.txt_height);
+        txt_weight =  findViewById(R.id.txt_weight);
 
         // initializing the radio group
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup_gender);
 
         // initialing the radio buttons
-        radioButton_male = (AppCompatRadioButton) findViewById(R.id.radio_male);
-        radioButton_female = (AppCompatRadioButton) findViewById(R.id.radio_female);
+        radioButton_male = findViewById(R.id.radio_male);
+        radioButton_female =  findViewById(R.id.radio_female);
 
         // initialing the layout for input fields
-        textInputLayout_name = (TextInputLayout) findViewById(R.id.textInputLayout_name);
-        textInputLayout_age  = (TextInputLayout) findViewById(R.id.textInputLayout_age);
-        textInputLayout_weight = (TextInputLayout) findViewById(R.id.textInputLayout_weight);
-        textInputLayout_height = (TextInputLayout) findViewById(R.id.textInputLayout_height);
+        textInputLayout_name =  findViewById(R.id.textInputLayout_name);
+        textInputLayout_age  =  findViewById(R.id.textInputLayout_age);
+        textInputLayout_weight = findViewById(R.id.textInputLayout_weight);
+        textInputLayout_height = findViewById(R.id.textInputLayout_height);
 
         // initialing the button
-        btn_save = (AppCompatButton) findViewById(R.id.btn_save);
+        btn_save =  findViewById(R.id.btn_save);
 
         // initialing the firebase auth state and database reference
         mAuth = FirebaseAuth.getInstance();
