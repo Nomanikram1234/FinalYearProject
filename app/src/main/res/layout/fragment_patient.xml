@@ -62,7 +62,7 @@
 
                 android:layout_width="240dp"
                 android:layout_height="240dp"
-                android:background="@drawable/avatar"
+
                 android:layout_centerHorizontal="true"
 
                 android:id="@+id/img_profile"

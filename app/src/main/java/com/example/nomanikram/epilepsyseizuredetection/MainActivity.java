@@ -216,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 .withPermissions(
                         android.Manifest.permission.BLUETOOTH,
                         android.Manifest.permission.SEND_SMS,
-                        Manifest.permission.READ_CONTACTS)
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.INTERNET)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {

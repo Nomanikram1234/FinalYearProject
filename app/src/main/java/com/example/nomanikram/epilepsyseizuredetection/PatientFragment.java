@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.LogWriter;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.nomanikram.epilepsyseizuredetection.models.Patient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -37,6 +41,8 @@ public class PatientFragment extends Fragment {
     private AppCompatTextView txt_gender;
     private AppCompatTextView txt_height;
     private AppCompatTextView txt_weight;
+
+    private static AppCompatImageView profileImage;
 
     // Declaring the variable for floating button
     private AppCompatButton btn_floating;
@@ -77,6 +83,8 @@ public class PatientFragment extends Fragment {
     txt_height = (AppCompatTextView) view.findViewById(R.id.txt_entered_height);
     txt_weight = (AppCompatTextView) view.findViewById(R.id.txt_entered_weight);
 
+    profileImage = view.findViewById(R.id.img_profile);
+
     // initialing the bloatinngbutton
     btn_floating = (AppCompatButton) view.findViewById(R.id.btn_floating);
 
@@ -108,6 +116,12 @@ public class PatientFragment extends Fragment {
             txt_gender.setText(patient.getGender());
             txt_height.setText(patient.getHeight()+" cm");
             txt_weight.setText(patient.getWeight()+" kg");
+
+                if(dataSnapshot.child("image").exists()) {
+//                    profileImage.setBackground(null);
+                    Glide.with(getActivity().getApplicationContext()).load(dataSnapshot.child("image").getValue()).into(profileImage);
+                }else
+                    profileImage.setBackgroundResource(R.drawable.avatar);
 
             progressDialog.dismiss();
 
