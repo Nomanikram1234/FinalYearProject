@@ -136,12 +136,16 @@ public class HomeFragment extends Fragment {
                     txt_weight.setText(patient.getWeight()+"kg");
 
 //                    profileImage.setBackground(image);
-            if(dataSnapshot.child("image").exists())
-                Glide.with(getActivity().getApplicationContext()).load(dataSnapshot.child("image").getValue()).into(profileImage);
-            else
-                profileImage.setBackgroundResource(R.drawable.avatar);
+                try
+                {
+                    if (dataSnapshot.child("image").exists() && dataSnapshot.child("image") != null)
+                        Glide.with(getActivity().getApplicationContext()).load(dataSnapshot.child("image").getValue()).into(profileImage);
+                    else
+                        profileImage.setBackgroundResource(R.drawable.avatar);
 
-
+                }catch (Exception ex){
+                    Log.w("ERROR","Glide Error");
+                }
             }
 
 

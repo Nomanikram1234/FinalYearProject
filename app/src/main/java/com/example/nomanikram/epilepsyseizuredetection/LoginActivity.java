@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 //      finish();
 
         // For Demo Login Purpose
-//        login("jani@gmail.com","Nomi1234");
+        login("jani@gmail.com","Nomi1234");
 
 
 
@@ -294,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
 
                     // In order to avoid window leakage
-                    progressDialog.dismiss();
+//                    progressDialog.hide();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
