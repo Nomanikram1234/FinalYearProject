@@ -136,6 +136,12 @@ public class HomeFragment extends Fragment {
                     txt_weight.setText(patient.getWeight()+"kg");
 
 //                    profileImage.setBackground(image);
+
+
+
+
+
+
                 try
                 {
                     if (dataSnapshot.child("image").exists() && dataSnapshot.child("image") != null)
@@ -146,6 +152,10 @@ public class HomeFragment extends Fragment {
                 }catch (Exception ex){
                     Log.w("ERROR","Glide Error");
                 }
+
+
+
+
             }
 
 

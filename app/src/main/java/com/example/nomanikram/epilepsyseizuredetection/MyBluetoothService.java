@@ -53,6 +53,7 @@ public class MyBluetoothService extends Service  {
     private ThreadConnected myThreadConnected;
 
     private String temp;
+    private static String activity;
 
     private Date d;
 
@@ -312,7 +313,7 @@ public class MyBluetoothService extends Service  {
                         try
                         {
                             String s=textStatus;
-                            String tem="",pul="";
+                            String tem="",pul="",act="";
                             try
                             {
                                 tem = s.substring(s.indexOf("(") + 1);
@@ -320,10 +321,98 @@ public class MyBluetoothService extends Service  {
 
                                 temp = tem;
 
-                        }
-                        catch(Exception e)
-                        {
-                            temp="Temperature not received";}
+                            }
+                            catch(Exception e)
+                            {
+                                temp="n/a";
+                            }
+                            /*
+                             Add try catch for accelrometer here
+                            */
+
+try {
+    if (s.substring(s.indexOf("p"), s.indexOf("g") + 1).contains("person not moving"))
+        activity = "no activity";
+    if (s.substring(s.indexOf("L"), s.indexOf("W") + 1).contains("LOW"))
+        activity = "low";
+    if (s.substring(s.indexOf("M"), s.indexOf("I") + 3).contains("MEDIUM"))
+        activity = "medium";
+    if (s.substring(s.indexOf("H"), s.indexOf("G") + 2).contains("HIGH"))
+        activity = "high";
+}
+                           catch (Exception ex) {
+                               activity = "n/a";
+                           }
+
+//                            try
+//                            {
+//
+//                                    act = s.substring(s.indexOf("p"), s.indexOf("g")+1);
+//                                    activity = act;
+//
+//                            }
+//                            catch(Exception e)
+//                            {
+////                                activity = "l n/a";
+//
+//try {
+//    activity = s.substring(s.indexOf("p"), s.indexOf("g")+1);;
+//}catch (Exception ex){
+//
+//}
+//
+//
+//                            }
+//
+//                            try
+//                            {
+//                                act= s.substring(s.indexOf("L"), s.indexOf("W")+1);
+//                                activity = act;
+//
+//                            }
+//                            catch(Exception e)
+//                            {
+//                                activity = "m n/a";
+//
+//                                act= s.substring(s.indexOf("L"), s.indexOf("W")+1);
+//                                activity = act;
+//                            }
+//
+//                            try
+//                            {
+//                                act = s.substring(s.indexOf("M"), s.indexOf("I")+3);
+//                                activity = act;
+//
+//                            }
+//                            catch(Exception e)
+//                            {
+//                                activity = "h n/a";
+//
+//                                act = s.substring(s.indexOf("M"), s.indexOf("I")+3);
+//                                activity = act;
+//                            }
+//
+//                            try
+//                            {
+//                                act = s.substring(s.indexOf("H"), s.indexOf("G")+2);
+//                                activity = act;
+//
+//                            }
+//                            catch(Exception e)
+//                            {
+//                                activity = "n n/a";
+//
+//                                act = s.substring(s.indexOf("H"), s.indexOf("G")+2);
+//                                activity = act;
+//                            }
+
+
+
+
+
+
+
+                            /* END Test Code */
                             try
                             {
                                 pul = s.substring(s.indexOf("{") + 1);
@@ -372,7 +461,7 @@ public class MyBluetoothService extends Service  {
                                 }
                                 catch(Exception e)
                                 {
-                                    pulse="--";
+                                    pulse="0";
                                 }
 
                         }catch (Exception e)
@@ -411,11 +500,15 @@ public class MyBluetoothService extends Service  {
                 // storing the data to database
                     record_ref.child("count").setValue(count);
                     count++;
+
                     record_ref.child("record "+count).child("pulse").setValue(""+obt.pulse);
+
                     record_ref.child("record "+count).child("temperture").setValue(""+obt.temp);
-                    record_ref.child("record "+count).child("acceleromenter").setValue("N/A");
+                    record_ref.child("record "+count).child("acceleromenter").setValue(activity);
                     record_ref.child("record "+count).child("time").setValue(""+time.format(d));
                     record_ref.child("record "+count).child("date").setValue(""+date.format(d));
+
+                    Log.w("Accelerometer","Activity: "+activity);
 
 
                 Log.w("TAG","MyBluetoothService\n"+"temp: "+temp+"\npulse: "+pulse);

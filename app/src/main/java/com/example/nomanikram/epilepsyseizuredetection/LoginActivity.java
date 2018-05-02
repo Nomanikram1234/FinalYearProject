@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 //      finish();
 
         // For Demo Login Purpose
+
         login("jani@gmail.com","Nomi1234");
 
 
