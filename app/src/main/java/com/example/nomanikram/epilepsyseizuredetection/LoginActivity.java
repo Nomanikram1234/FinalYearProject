@@ -73,32 +73,26 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
-
-
 //      Intent intent = new Intent(getApplicationContext(),MainActivity.class);
 //      startActivity(intent);
 //      finish();
 
         // For Demo Login Purpose
-
-        login("jani@gmail.com","Nomi1234");
-
-
+        login("jani@gmail.com", "Nomi1234");
 
 
         // Initializing the variables
         username = findViewById(R.id.txt_username);
         password = findViewById(R.id.txt_password);
 
-        usernameLayout =  findViewById(R.id.username_textInputLayout);
-        passwordLayout =  findViewById(R.id.password_textInputLayout);
+        usernameLayout = findViewById(R.id.username_textInputLayout);
+        passwordLayout = findViewById(R.id.password_textInputLayout);
 
         btn_login = findViewById(R.id.btn_login);
-        btn_signup =  findViewById(R.id.btn_signup);
+        btn_signup = findViewById(R.id.btn_signup);
         btn_help_login = findViewById(R.id.btn_help_Login);
 
-        relative =  findViewById(R.id.relativeLayout);
+        relative = findViewById(R.id.relativeLayout);
 
         // View variable initialized for snackbar
         view_S = findViewById(R.id.relativeLayout);
@@ -125,19 +119,16 @@ public class LoginActivity extends AppCompatActivity {
                 boolean email_wrong_pattern = !username.getText().toString().contains("@") || !username.getText().toString().contains(".com");
 
                 // check if username field is empty
-                if (is_usernameFields_empty)
-                {
+                if (is_usernameFields_empty) {
                     usernameLayout.setErrorEnabled(true);
                     usernameLayout.setError("Email field is empty");
                 }
                 // if username is not empty
-                else
-                {
+                else {
                     usernameLayout.setErrorEnabled(false);
 
                     // check if email pattern is wrong
-                    if (email_wrong_pattern)
-                    {
+                    if (email_wrong_pattern) {
                         usernameLayout.setErrorEnabled(true);
                         usernameLayout.setError("Email pattern is wrong");
                     } else
@@ -148,8 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (is_passwordFields_empty) {
                     passwordLayout.setErrorEnabled(true);
                     passwordLayout.setError("Password field is empty");
-                }
-                else
+                } else
                     passwordLayout.setErrorEnabled(false);
 
                 // checks if username & password fields are not empty, email pattern is correct
@@ -323,8 +313,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
 
@@ -339,5 +327,6 @@ public class LoginActivity extends AppCompatActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
          */
     }
+
 
 }

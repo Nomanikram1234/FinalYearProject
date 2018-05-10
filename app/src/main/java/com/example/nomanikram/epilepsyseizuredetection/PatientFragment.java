@@ -117,12 +117,16 @@ public class PatientFragment extends Fragment {
             txt_height.setText(patient.getHeight()+" cm");
             txt_weight.setText(patient.getWeight()+" kg");
 
-                if(dataSnapshot.child("image").exists()) {
+
+            try {
+                if (dataSnapshot.child("image").exists()) {
 //                    profileImage.setBackground(null);
                     Glide.with(getActivity().getApplicationContext()).load(dataSnapshot.child("image").getValue()).into(profileImage);
-                }else
+                } else
                     profileImage.setBackgroundResource(R.drawable.avatar);
-
+            }catch (Exception ex){
+//                Log.w("","Glide exception caught");
+            }
             progressDialog.dismiss();
 
         }

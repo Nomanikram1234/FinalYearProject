@@ -44,19 +44,19 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
     DatabaseReference database;
 
 
-    private List<Record> record ;
+    private List<Record> record;
     Context context;
 
     GraphView graph;
 
-   static ArrayList<String> pulse_rates_list;
+    static ArrayList<String> pulse_rates_list;
 
-    public RecycleAdapter_record(List<Record> record ,Context context){
+    public RecycleAdapter_record(List<Record> record, Context context) {
         this.record = record;
         this.context = context;
 
         mAuth = FirebaseAuth.getInstance();
-        database =FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance().getReference();
 
         pulse_rates_list = new ArrayList<String>();
     }
@@ -64,10 +64,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 
     @Override
     public view_holder_record onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_record,parent,false);
-
-
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_record, parent, false);
 
 
         return new view_holder_record(view);
@@ -98,11 +95,10 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 
 
                 // Dummy Data User at the moment
-                 graph = (GraphView) view_f.findViewById(R.id.graph);
+                graph = (GraphView) view_f.findViewById(R.id.graph);
 
                 // query to read the patient node
                 Query query = database.child("users").child(mAuth.getCurrentUser().getUid()).child("Patient").child("Record");
-
 
 
                 query.addValueEventListener(new ValueEventListener() {
@@ -110,11 +106,11 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                        for( DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                             Log.w("", "snapshot R: " + dataSnapshot.getChildrenCount());
 
-                            if(!snapshot.hasChild("pulse"))
+                            if (!snapshot.hasChild("pulse"))
                                 continue;
 
 //                            Record R = new Record();
@@ -125,18 +121,18 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 //                            R.date = (String) snapshot.child("date").getValue();
 
                             pulse_rates_list.add(snapshot.child("pulse").getValue().toString());
-                            Log.w("","SIZE inside: "+pulse_rates_list.size());
-                          //  Log.w("", "Temperature over Record: " + R.temp);
+                            Log.w("", "SIZE inside: " + pulse_rates_list.size());
+                            //  Log.w("", "Temperature over Record: " + R.temp);
 
-                            Log.w("","position inside\n  "+pulse_rates_list);
+                            Log.w("", "position inside\n  " + pulse_rates_list);
 
 
                         }
 
-                        Log.w("","CHECKING: "+pulse_rates_list);
+                        Log.w("", "CHECKING: " + pulse_rates_list);
 
 
-                        if(pulse_rates_list.size() == 1){
+                        if (pulse_rates_list.size() == 1) {
                             if (position == 0) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position)))
@@ -147,7 +143,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                         }
 
 
-                        if(pulse_rates_list.size() == 2){
+                        if (pulse_rates_list.size() == 2) {
                             if (position == 0) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position)))
@@ -168,7 +164,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                         }
 
 
-                        if(pulse_rates_list.size() == 3){
+                        if (pulse_rates_list.size() == 3) {
                             if (position == 0) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position)))
@@ -200,7 +196,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                         }
 
 
-                        if(pulse_rates_list.size() == 4){
+                        if (pulse_rates_list.size() == 4) {
                             if (position == 0) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position)))
@@ -243,7 +239,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 
                         }
 
-                        if(pulse_rates_list.size() == 5){
+                        if (pulse_rates_list.size() == 5) {
                             if (position == 0) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position)))
@@ -301,7 +297,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 
 
                         // Size == 6
-                        if(pulse_rates_list.size() >= 6) {
+                        if (pulse_rates_list.size() >= 6) {
                             if (position == 0) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position)))
@@ -355,7 +351,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                                 graph.addSeries(series);
                             }
 
-                           if(position == 5) {
+                            if (position == 5) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
 //
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position - 5))),
@@ -365,12 +361,11 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                                         new DataPoint(4, Integer.parseInt(pulse_rates_list.get(position - 1))),
                                         new DataPoint(5, Integer.parseInt(pulse_rates_list.get(position)))
                                 });
-                               Log.w("Error","Position 5");
+                                Log.w("Error", "Position 5");
                                 graph.addSeries(series);
                             }
 
-                            if(position >= 6)
-                            {
+                            if (position >= 6) {
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                                         new DataPoint(0, Integer.parseInt(pulse_rates_list.get(position - 5))),
                                         new DataPoint(1, Integer.parseInt(pulse_rates_list.get(position - 4))),
@@ -379,7 +374,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                                         new DataPoint(4, Integer.parseInt(pulse_rates_list.get(position - 1))),
                                         new DataPoint(5, Integer.parseInt(pulse_rates_list.get(position)))
                                 });
-                                Log.w("Error","Position 6");
+                                Log.w("Error", "Position 6");
                                 graph.addSeries(series);
                             }
 
@@ -393,7 +388,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
                     }
                 });
 
-                Log.w("","SIZE 1: "+pulse_rates_list.size());
+                Log.w("", "SIZE 1: " + pulse_rates_list.size());
 
 //
 //                if(pulse_rates_list.size() == 1){
@@ -479,7 +474,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 //                }
 
 //                for(int i =0 ; i< pulse_rates_list.size() ;i++)
-                    Log.w("","position\n  "+pulse_rates_list);
+                Log.w("", "position\n  " + pulse_rates_list);
 
 
 //
@@ -521,7 +516,7 @@ public class RecycleAdapter_record extends RecyclerView.Adapter<view_holder_reco
 
     }
 
-    private void drawGraph(){
+    private void drawGraph() {
 
     }
 }

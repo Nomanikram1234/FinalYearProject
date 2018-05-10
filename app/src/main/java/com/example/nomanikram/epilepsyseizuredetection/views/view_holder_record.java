@@ -11,7 +11,7 @@ import com.example.nomanikram.epilepsyseizuredetection.R;
  * Created by nomanikram on 12/02/2018.
  */
 
-public class view_holder_record extends RecyclerView.ViewHolder{
+public class view_holder_record extends RecyclerView.ViewHolder {
 
     TextView pulse;
     TextView temp;

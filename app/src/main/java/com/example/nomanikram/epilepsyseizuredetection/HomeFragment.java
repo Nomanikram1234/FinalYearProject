@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // initializing the textview
         txt_name = (AppCompatTextView) view.findViewById(R.id.txt_name);
@@ -85,10 +85,10 @@ public class HomeFragment extends Fragment {
         txt_pulse = (AppCompatTextView) view.findViewById(R.id.txt_pulserate);
         txt_temp = (AppCompatTextView) view.findViewById(R.id.txt_temperature);
 
-        profileImage =(CircleImageView) view.findViewById(R.id.profile_image);
+        profileImage = (CircleImageView) view.findViewById(R.id.profile_image);
 
         // initializing the bluetooth imageview
-        imageButton_connectivity  =(ImageView) view.findViewById(R.id.bluetoothConnection);
+        imageButton_connectivity = (ImageView) view.findViewById(R.id.bluetoothConnection);
 
         // initializing the firebase auth state and get reference to database
         mAuth = FirebaseAuth.getInstance();
@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
         userID = mAuth.getCurrentUser().getUid();
 
         storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference().child("images/patient/"+mAuth.getCurrentUser().getUid());
+        storageReference = storage.getReference().child("images/patient/" + mAuth.getCurrentUser().getUid());
         image = Uri.parse("https://firebasestorage.googleapis.com/v0/b/fyp-esd.appspot.com/o/images%2Fpatient%2F9cgyFYGxnZhH1pAdhBgNBxHn2fM2?alt=media&token=da712908-0189-4ff0-99c2-cede35bd4706");
 
 
@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         imageButton_connectivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),BluetoothConnectionActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), BluetoothConnectionActivity.class);
                 startActivity(intent);
             }
         });
@@ -117,43 +117,36 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    // Storing data to patient object
-                    Patient patient = new Patient();
-                    patient.setName(""+dataSnapshot.child("name").getValue());
-                    patient.setAge(""+dataSnapshot.child("age").getValue());
-                    patient.setWeight(""+dataSnapshot.child("weight").getValue());
-                    patient.setHeight(""+dataSnapshot.child("height").getValue());
+                // Storing data to patient object
+                Patient patient = new Patient();
+                patient.setName("" + dataSnapshot.child("name").getValue());
+                patient.setAge("" + dataSnapshot.child("age").getValue());
+                patient.setWeight("" + dataSnapshot.child("weight").getValue());
+                patient.setHeight("" + dataSnapshot.child("height").getValue());
 
 //                    Log.w("TAG", "Patient Name: " + patient.getName());
 //                    Log.w("TAG", "Patient Age: " + patient.getAge());
 //                    Log.w("TAG", "Patient Height: " + patient.getWeight());
 //                    Log.w("TAG", "Patient Weight: " + patient.getHeight());
 
-                    // displaying patient data from obj to text views
-                    txt_name.setText(patient.getName());
-                    txt_age.setText(patient.getAge()+ " years old");
-                    txt_height.setText(patient.getHeight() + "cm");
-                    txt_weight.setText(patient.getWeight()+"kg");
+                // displaying patient data from obj to text views
+                txt_name.setText(patient.getName());
+                txt_age.setText(patient.getAge() + " years old");
+                txt_height.setText(patient.getHeight() + "cm");
+                txt_weight.setText(patient.getWeight() + "kg");
 
 //                    profileImage.setBackground(image);
 
 
-
-
-
-
-                try
-                {
+                try {
                     if (dataSnapshot.child("image").exists() && dataSnapshot.child("image") != null)
                         Glide.with(getActivity().getApplicationContext()).load(dataSnapshot.child("image").getValue()).into(profileImage);
                     else
                         profileImage.setBackgroundResource(R.drawable.avatar);
 
-                }catch (Exception ex){
-                    Log.w("ERROR","Glide Error");
+                } catch (Exception ex) {
+                    Log.w("ERROR", "Glide Error");
                 }
-
-
 
 
             }
@@ -179,10 +172,10 @@ public class HomeFragment extends Fragment {
             String pulse = data.pulse;
             String temp = data.temp;
 
-            Log.w("TAG","HomeFragment\n"+"temp: "+temp+"\npulse: "+pulse);
+            Log.w("TAG", "HomeFragment\n" + "temp: " + temp + "\npulse: " + pulse);
 
-            txt_pulse.setText(pulse+"bpm");
-            txt_temp.setText(temp+"˚C");
+            txt_pulse.setText(pulse + "bpm");
+            txt_temp.setText(temp + "˚C");
 
         }
     }

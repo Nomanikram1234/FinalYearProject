@@ -33,6 +33,10 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import junit.framework.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,12 +60,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
         // initialing the bottom nav
         bottom = (BottomNavigationView) findViewById(R.id.bottom);
 
         // initializing with firebase auth state and database red
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
+
+//        TesTingCode();
 
         Log.w("", "UID: " + mAuth.getCurrentUser().getUid());
 
@@ -239,6 +249,46 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .onSameThread()
                 .check();
+    }
+
+
+    //Testing code for the Service part
+    private void TesTingCode(){
+
+        ArrayList<String> numbers = new ArrayList<String>();
+
+
+        Query query = database.child("users").child(mAuth.getCurrentUser().getUid()).child("Patient").child("Contact");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Log.w("","Duckey: "+dataSnapshot);
+                Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+
+                while(items.hasNext()){
+                    DataSnapshot item = items.next();
+                    try {
+
+                        Log.w("", "Donkey: " + item.child("Number").getValue().toString());
+                     //   numbers.add(item.child("Number").getValue().toString());
+
+                    }catch (Exception ex){
+                        Log.w("", "--|--");
+                    }
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }
