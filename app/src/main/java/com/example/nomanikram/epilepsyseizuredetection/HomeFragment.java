@@ -42,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeFragment extends Fragment {
 
     // Declaring the variable for text view
-    private AppCompatTextView txt_name;
+    static public AppCompatTextView txt_name;
     private AppCompatTextView txt_age;
     private AppCompatTextView txt_weight;
     private AppCompatTextView txt_height;

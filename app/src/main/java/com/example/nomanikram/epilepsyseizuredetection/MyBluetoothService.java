@@ -562,6 +562,12 @@ public class MyBluetoothService extends Service {
 //                });
 
                 getContacts();
+
+                try{
+                checkCondition(pulse,temp,activity);
+                }catch (Exception ex){
+                    Log.w("","Error at Check Condition Function");
+                }
                 /********************
                  ************************/
 
@@ -703,7 +709,12 @@ public class MyBluetoothService extends Service {
                         getContacts();
 
                         for (int i = 0; i < contacts.size(); i++) {
-                            sendSMS(contacts.get(i), "Person is having seizure");
+
+                            try {
+                                sendSMS(contacts.get(i), HomeFragment.txt_name+" is having seizure please help is immediately");
+                            }catch (Exception ex){
+                                sendSMS(contacts.get(i), "Person is having seizure");
+                            }
                         }
 
                     }
