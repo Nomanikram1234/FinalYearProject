@@ -1,5 +1,5 @@
-# FinalYearProject
-Epileptic Seizure Detection
+# Epileptic Seizure Detection - Final Year Project
+
 
 The epileptic seizure is generally described as a disease where a person loses all the control of his/her body resulting in jerking movement and rise in heartbeat and temperature. These seizures are very common and can occur at any point in life. The epileptic seizures are the leading cause of the existing and future neurological dysfunction leading to stroke. Approximately, 1.5% of the world's population is suffering from epilepsy disease. Although, there are many drugs available in the market, nevertheless, they are not absolutely treating epilepsy.The situation makes patients suffer an uncertain routine without the availability of the monitoring and prevention method to control the seizures with predicting the events in advance. Children are most likely to have these seizures and are generally more difficult to detect; since they are small and can't notify others of their problem. The seizures are very strong and can result in severe damage to the body. The damage can be as severe as fractures. 
 
